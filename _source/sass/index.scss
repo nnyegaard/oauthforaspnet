@@ -1,0 +1,64 @@
+#index-banner {
+	background-color: #2196F3;
+
+	h1 {
+		color: #FFF;
+		font-weight: 300;
+	}
+
+	h4 { 
+		color: #BBDEFB !important;
+		font-weight: 300;
+		margin-bottom: 40px;
+	}
+
+	#search {
+		color: white;
+		font-size: 2em;
+		font-weight: 300;
+		margin-top: 50px;
+		margin-bottom: 50px;
+
+		&::-webkit-input-placeholder { /* WebKit browsers */
+		    color: #64b5f6;
+		}
+
+		&:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		   color: #64b5f6;
+		   opacity: 1;
+		}
+
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		   color: #64b5f6;
+		   opacity: 1;
+		}
+
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		   color: #64b5f6;
+		}
+	}
+}
+
+
+#front-page-nav {
+  	background-color: #FFF;
+  	position: relative;
+
+	li {
+		&:hover {
+			background-color: #bbdefb;
+		}
+
+		&.active {
+			background-color: #bbdefb;
+		}
+	}
+	
+	a {
+		color: #42a5f5;
+	}	
+
+	.container {
+		height: inherit;
+	}
+}
