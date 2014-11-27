@@ -8882,3 +8882,6 @@ ul.table-of-contents a.active {
     color: #42a5f5; }
   #front-page-nav .container {
     height: inherit; }
+
+#provider-list li.mix {
+  display: none; }

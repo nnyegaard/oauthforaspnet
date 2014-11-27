@@ -17,6 +17,7 @@
   "devDependencies": {
     "jquery": "~2.1.1",
     "materialize": "*",
-    "pygments": "~2.0.1"
+    "pygments": "~2.0.1",
+    "mixitup": "~2.1.7"
   }
 }
