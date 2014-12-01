@@ -37,17 +37,19 @@ layout: default
       <ul id="provider-list">
       {% for provider_hash in site.data.providers %}
       {% assign provider = provider_hash[1] %}
-        <li class="mix card cyan">
-          <div class="card-content">
-            <h1>{{ provider.name }}</h1>
-            <p>This is sample content</p>
-          </div> 
-          <div class="card-footer">
-            <h1>Footer</h1>
-            <h2>Sample content</h2>
-            <p>Sample content</p>
-            <a class="card-action" href="#">This is a link</a>
-            <a class="card-action" href="#">This is a link</a>
+        <li class="mix">
+          <div class="card cyan">
+            <div class="card-content">
+              <h1 class="provider-name">{{ provider.name }}</h1>
+              <p>This is sample content</p>
+            </div> 
+            <div class="card-footer">
+              <h1>Footer</h1>
+              <h2>Sample content</h2>
+              <p>Sample content</p>
+              <a class="card-action" href="#">This is a link</a>
+              <a class="card-action" href="#">This is a link</a>
+            </div>
           </div>
         </li>
       {% endfor %}
@@ -55,3 +57,7 @@ layout: default
     </div>
   </div>
 </div>
+
+{% for post in site.posts %}
+<a href="{{ post.url }}">{{ post.title }}</a>
+{% endfor %}

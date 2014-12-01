@@ -8883,5 +8883,14 @@ ul.table-of-contents a.active {
   #front-page-nav .container {
     height: inherit; }
 
-#provider-list li.mix {
-  display: none; }
+#provider-list li {
+  -webkit-box-sizing: border-box;
+  /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;
+  /* Firefox, other Gecko */
+  box-sizing: border-box;
+  float: left;
+  width: 33.3%;
+  padding: 10px; }
+  #provider-list li.mix {
+    display: none; }

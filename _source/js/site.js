@@ -12,7 +12,7 @@
 				$('#provider-list li').each(function() {
 					//$this = $(this);
 					
-					if ($(this).find('h1').text().toLowerCase().match(searchTerm))
+					if ($(this).find('.provider-name').text().toLowerCase().match(searchTerm))
 					{
 						$matching = $matching.add(this);
 					} 

@@ -12,4 +12,6 @@ github_username:  jerriep
 markdown: kramdown
 highlighter: pygments
 
+permalink: /:categories/:title
+
 exclude:      ["bower_components", "node_modules", "gulpfile.js", "bower.json", "package.json"]
