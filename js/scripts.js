@@ -9225,15 +9225,6 @@ return jQuery;
 
 (function() {
 	$( document ).ready(function() {
-		// $("#provider-list .card-content img").imgLiquid({
-		// 	fill: false,
-		// 	onItemError:    function(index, container, img){
-		// 		console.log(index);
-		// 		console.log(container);
-		// 		console.log(img);
-		// 	}
-		// });
-
 		$('#provider-list').mixItUp();
 
     	$('#search').on('input', function() {
