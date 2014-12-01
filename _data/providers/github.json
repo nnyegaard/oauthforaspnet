@@ -1,4 +1,5 @@
 {
 	"id": "github",
-	"name": "Github"
+	"name": "Github",
+	"logo": "github.png"
 }

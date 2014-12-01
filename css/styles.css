@@ -8894,3 +8894,13 @@ ul.table-of-contents a.active {
   padding: 10px; }
   #provider-list li.mix {
     display: none; }
+    #provider-list li.mix .card .card-content {
+      height: 100px;
+      border-bottom: 1px solid Gray; }
+      #provider-list li.mix .card .card-content .card-image {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        margin: 10px;
+        width: 100%;
+        height: 100%; }

@@ -38,17 +38,13 @@ layout: default
       {% for provider_hash in site.data.providers %}
       {% assign provider = provider_hash[1] %}
         <li class="mix">
-          <div class="card cyan">
-            <div class="card-content">
-              <h1 class="provider-name">{{ provider.name }}</h1>
-              <p>This is sample content</p>
+          <div class="card">
+            <div class="card-content" >
+              <div class="card-image" style="background-image: url('/images/logos/{{ provider.logo }}');" >
+              </div>
             </div> 
             <div class="card-footer">
-              <h1>Footer</h1>
-              <h2>Sample content</h2>
-              <p>Sample content</p>
-              <a class="card-action" href="#">This is a link</a>
-              <a class="card-action" href="#">This is a link</a>
+              <h1 class="provider-name">{{ provider.name }}</h1>
             </div>
           </div>
         </li>
