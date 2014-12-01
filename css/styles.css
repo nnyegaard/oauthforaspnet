@@ -2532,6 +2532,10 @@ a {
   text-decoration: none;
 }
 
+p {
+  color: #555;
+}
+
 .no-select, input[type=range], input[type=range] + .thumb {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -2557,7 +2561,7 @@ li {
   list-style-type: none;
 }
 
-.z-depth-1, nav, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, ul.collapsible {
+.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .modal, ul.collapsible {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -2591,6 +2595,12 @@ li {
   -webkit-box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
   -moz-box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+}
+
+blockquote {
+  margin: 20px 0;
+  padding-left: 1.5rem;
+  border-left: 5px solid #EF9A9A;
 }
 
 .parallax-container {
@@ -2756,9 +2766,9 @@ td, th {
 }
 .collection.pagination {
   display: inline-block;
-  background-color: transparent;
 }
 .collection.pagination ul {
+  background-color: transparent;
   font-size: 0;
   display: inline-block;
 }
@@ -2772,7 +2782,7 @@ td, th {
 .collection.pagination li a {
   padding: 0px 5px;
 }
-.collection.pagination liactive {
+.collection.pagination li.active {
   background-color: #03a9f4;
   color: #FFF;
 }
@@ -2787,7 +2797,7 @@ td, th {
   font-weight: normal;
   font-style: normal;
 }
-[class^="mdi-"], [class*=" mdi-"] {
+[class^="mdi-"], .select-wrapper span.select-dropdown:after, [class*=" mdi-"] {
   font-family: "Material-Design-Icons";
   speak: none;
   font-style: normal;
@@ -5439,7 +5449,7 @@ td, th {
   content: "\e893";
 }
 
-.mdi-navigation-arrow-drop-down:before {
+.mdi-navigation-arrow-drop-down:before, .select-wrapper span.select-dropdown:after {
   content: "\e894";
 }
 
@@ -5786,7 +5796,7 @@ td, th {
 }
 
 .section {
-  padding-top: 1.5rem;
+  padding-top: 1rem;
   padding-bottom: 1rem;
 }
 .section.no-pad {
@@ -5810,6 +5820,11 @@ td, th {
   clear: both;
 }
 .row .col {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  transition: all 0.3s;
   float: left;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -6203,9 +6218,7 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Roboto", sans-serif;
   font-weight: 400;
-  text-rendering: optimizeLegibility;
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -6213,43 +6226,39 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 }
 
 h1 {
-  font-size: 4.1rem;
-  line-height: 4.51rem;
-  margin: 2.05rem 0 1.64rem 0;
-  letter-spacing: -0.1rem;
+  font-size: 4.2rem;
+  line-height: 4.62rem;
+  margin: 2.1rem 0 1.68rem 0;
 }
 
 h2 {
-  font-size: 3.21rem;
-  line-height: 3.531rem;
-  margin: 1.605rem 0 1.284rem 0;
+  font-size: 3.56rem;
+  line-height: 3.916rem;
+  margin: 1.78rem 0 1.424rem 0;
 }
 
 h3 {
-  font-size: 2.42rem;
-  line-height: 2.662rem;
-  margin: 1.21rem 0 0.968rem 0;
+  font-size: 2.92rem;
+  line-height: 3.212rem;
+  margin: 1.46rem 0 1.168rem 0;
 }
 
 h4 {
-  font-size: 1.71rem;
-  line-height: 1.881rem;
-  margin: 0.855rem 0 0.684rem 0;
-  letter-spacing: .05rem;
+  font-size: 2.28rem;
+  line-height: 2.508rem;
+  margin: 1.14rem 0 0.912rem 0;
 }
 
 h5 {
-  font-size: 1.42rem;
-  line-height: 1.562rem;
-  margin: 0.71rem 0 0.568rem 0;
-  letter-spacing: .05rem;
+  font-size: 1.64rem;
+  line-height: 1.804rem;
+  margin: 0.82rem 0 0.656rem 0;
 }
 
 h6 {
   font-size: 1rem;
   line-height: 1.1rem;
   margin: 0.5rem 0 0.4rem 0;
-  letter-spacing: .03rem;
 }
 
 em {
@@ -6482,40 +6491,58 @@ small {
   }
 }
 
-.card {
+.card-panel {
+  padding: 1rem;
+  margin: 8px 0;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
   background-clip: padding-box;
+}
+
+.card {
   margin-top: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  background-clip: padding-box;
 }
-.card h1 {
-  font-size: 1.71rem;
+.card span.card-title {
   color: #fff;
+  font-size: 24px;
+  font-weight: 300;
 }
-.card h2 {
-  font-size: 1.14rem;
-  color: #fff;
+.card.small {
+  height: 300px;
+  position: relative;
 }
-.card h3 {
-  font-size: 1rem;
-  color: #fff;
+.card.small .card-image {
+  overflow: hidden;
+  height: 150px;
 }
-.card p {
-  font-size: 0.8rem;
-  color: #fff;
+.card.small .card-content {
+  overflow: hidden;
+  height: 150px;
 }
-.card .card-content {
+.card.small .card-action {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.card .card-image {
   position: relative;
   overflow: hidden;
-  padding: 1rem;
 }
-.card .card-content img {
+.card .card-image img {
   -webkit-border-radius: 2px 2px 0 0;
   -moz-border-radius: 2px 2px 0 0;
   border-radius: 2px 2px 0 0;
   background-clip: padding-box;
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
   top: 0;
@@ -6523,24 +6550,45 @@ small {
   width: 100%;
   z-index: -1;
 }
-.card .card-footer {
-  background-color: #FFF;
-  padding: 2px 1rem 8px 1rem;
+.card .card-image span.card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 16px;
+}
+.card .card-content {
+  padding: 16px;
   -webkit-border-radius: 0 0 2px 2px;
   -moz-border-radius: 0 0 2px 2px;
   border-radius: 0 0 2px 2px;
   background-clip: padding-box;
-  margin-bottom: 30px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-.card .card-footer h1, .card .card-footer h2, .card .card-footer h3, .card .card-footer p {
-  color: #000;
+.card .card-content p {
+  margin: 0;
+  color: inherit;
 }
-.card a.card-action {
-  margin-right: 20%;
-  color: #ffab2e;
+.card .card-content span.card-title {
+  line-height: 48px;
 }
-.card a.card-action:hover {
-  color: #ffcc35;
+.card .card-action {
+  border-top: 1px solid rgba(160, 160, 160, 0.2);
+  padding: 16px;
+}
+.card .card-action a {
+  color: #ffab40;
+  margin-right: 16px;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+  text-transform: uppercase;
+}
+.card .card-action a:hover {
+  color: #ffd8a6;
 }
 
 #toast-container {
@@ -7026,6 +7074,11 @@ ul.collapsible {
   z-index: 999;
 }
 
+label {
+  font-size: 0.8rem;
+  color: #bdbdbd;
+}
+
 /***************************
    Text Inputs + Textarea
 ****************************/
@@ -7038,6 +7091,7 @@ ul.collapsible {
   z-index: -1;
   top: .8rem;
   left: .5rem;
+  font-size: 1rem;
   -webkit-transition: 0.2s ease-out;
   -moz-transition: 0.2s ease-out;
   -o-transition: 0.2s ease-out;
@@ -7045,6 +7099,7 @@ ul.collapsible {
   transition: 0.2s ease-out;
 }
 .input-field label.active {
+  font-size: 0.8rem;
   -webkit-transform: translateY(-130%);
   -moz-transform: translateY(-130%);
   -ms-transform: translateY(-130%);
@@ -7060,9 +7115,9 @@ ul.collapsible {
 }
 .input-field input[type=text]:valid,
 .input-field input[type=password]:valid,
-.input-field input[type=email]:valid
-input[type=date]:valid
-textarea:valid {
+.input-field input[type=email]:valid,
+.input-field input[type=date]:valid,
+.input-field textarea:valid {
   border-bottom: 1px solid #4CAF50;
   -webkit-box-shadow: 0 1px 0 0 #4CAF50;
   -moz-box-shadow: 0 1px 0 0 #4CAF50;
@@ -7323,7 +7378,26 @@ form p:last-child {
   Select Field 
 ***************/
 .select-wrapper span.select-dropdown {
+  position: relative;
   cursor: pointer;
+  color: #444;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #bdbdbd;
+  outline: none;
+  height: 3rem;
+  line-height: 3rem;
+  width: 100%;
+  font-size: 1rem;
+  margin: 0 0 15px 0;
+  padding: 0;
+  display: block;
+  position: relative;
+}
+.select-wrapper span.select-dropdown:after {
+  position: absolute;
+  right: 0;
+  font-size: 23px;
 }
 
 select {
@@ -7502,6 +7576,18 @@ input[type=range]:focus::-ms-fill-upper {
   background: #ccc;
 }
 
+/***************************
+   Text Inputs + Textarea
+****************************/
+select {
+  background-color: #fffafa;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  height: 3rem;
+}
+
 /***************
     Nav List
 ***************/
@@ -7541,23 +7627,6 @@ ul.table-of-contents a.active {
     height: 120%;
     background-color: #FFF;
     z-index: 1000;
-    -webkit-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    -moz-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    -o-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    -ms-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  ul.side-nav.active {
-    -webkit-transform: translateX(240px);
-    -moz-transform: translateX(240px);
-    -ms-transform: translateX(240px);
-    -o-transform: translateX(240px);
-    transform: translateX(240px);
-    -webkit-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    -moz-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    -o-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    -ms-transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
-    transition: transform 250ms cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   ul.side-nav li {
     float: none;
@@ -7588,6 +7657,8 @@ ul.table-of-contents a.active {
   position: fixed;
   top: 0px;
   left: 0px;
+  right: 0px;
+  bottom: 0px;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
@@ -8778,6 +8849,8 @@ ul.table-of-contents a.active {
   }
 }
 
+/*# sourceMappingURL=materialize.css.map */
+
 .hll { background-color: #ffffcc }
 .c { color: #408080; font-style: italic } /* Comment */
 .err { border: 1px solid #FF0000 } /* Error */
@@ -8895,11 +8968,13 @@ ul.table-of-contents a.active {
   #provider-list li.mix {
     display: none; }
     #provider-list li.mix .card .card-content {
-      height: 100px;
-      border-bottom: 1px solid Gray; }
+      height: 100px; }
       #provider-list li.mix .card .card-content .card-image {
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
         width: 100%;
         height: 100%; }
+    #provider-list li.mix .card .card-footer h2 {
+      margin-top: 0px;
+      margin-bottom: 0px; }
