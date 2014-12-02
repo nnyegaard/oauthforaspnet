@@ -8991,3 +8991,16 @@ header.provider-title h2 {
   border-bottom: 1px solid rgba(160, 160, 160, 0.6);
   font-weight: 300;
   padding-bottom: 20px; }
+
+h5.provider-sidebar-header {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+  margin-top: 30px;
+  margin-bottom: 5px; }
+  h5.provider-sidebar-header.first {
+    margin-top: 15px; }
+
+ul.provider-sidebar-list {
+  margin-bottom: 0px;
+  margin-top: 5px; }
