@@ -2,13 +2,19 @@
 layout: default
 ---
 <div class="container">
-
-	<h2 class="post-title">{{ page.title }}</h2>
-	<p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-
+	<header class="provider-title">
+		<h2>{{ page.title }}</h2>
+	</header>
 	<div class="row">
-		<div class="col s12">
+		<div class="col s8">
 			{{ content }}
+		</div>
+		<div class="col offset-s1 s3">
+			<h3>Links</h3>
+			{% for link in page.links %}
+			<p>{{ link.name }}</p>
+			<p>{{ link.url }}</p>
+			{% endfor %}
 		</div>
 	</div>
 </div>

@@ -8986,3 +8986,8 @@ ul.table-of-contents a.active {
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   #provider-list li {
     width: 50%; } }
+
+header.provider-title h2 {
+  border-bottom: 1px solid rgba(160, 160, 160, 0.6);
+  font-weight: 300;
+  padding-bottom: 20px; }

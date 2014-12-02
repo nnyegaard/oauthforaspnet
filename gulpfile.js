@@ -10,7 +10,10 @@ var gulp = require('gulp'),
 
 // Do them stylesheets
 gulp.task('css', function() {
-	var appStyles = gulp.src('_source/sass/index.scss')
+	var appStyles = gulp.src([
+		'_source/sass/index.scss',
+		'_source/sass/provider.scss',
+		])
 		.pipe(sass());
 
 	var libraryStyles = gulp.src([
