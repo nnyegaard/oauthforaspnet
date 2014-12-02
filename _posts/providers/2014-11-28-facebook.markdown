@@ -1,6 +1,7 @@
 ---
 layout: provider
 title:  Facebook
+logo: facebook.png
 categories: providers
 ---
 
