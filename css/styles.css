@@ -9004,3 +9004,7 @@ h5.provider-sidebar-header {
 ul.provider-sidebar-list {
   margin-bottom: 0px;
   margin-top: 5px; }
+
+.provider-guide img {
+  max-width: 100%;
+}

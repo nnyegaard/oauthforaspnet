@@ -1,6 +1,0 @@
----
-layout: provider
-title:  Github
-logo: github.png
-categories: providers
----

@@ -1,6 +1,0 @@
----
-layout: provider
-title:  LinkedIn
-logo: linkedin.png
-categories: providers
----
