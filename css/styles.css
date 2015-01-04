@@ -8956,6 +8956,14 @@ ul.table-of-contents a.active {
   #front-page-nav .container {
     height: inherit; }
 
+    #page-nav {
+      background-color: #2196F3;
+    }
+  #page-nav li:hover {
+    background-color: #1976D2; }
+  #page-nav li.active {
+    background-color: #1976D2; }
+
 #provider-list li {
   -webkit-box-sizing: border-box;
   /* Safari/Chrome, other WebKit */
