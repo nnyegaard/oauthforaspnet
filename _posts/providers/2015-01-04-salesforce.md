@@ -70,17 +70,13 @@ Returning to Visual Studio, navigate to the `Startup.Auth` file located in the `
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
-``` csharp
-using Owin.Security.Providers.SalesForce;
-```
+	using Owin.Security.Providers.SalesForce;
 
 Enable the SalesForce provider by making a call to the `app.UseSalesforceAuthentication` method passing in the Consumer Key of your SalesForce application as the `clientId` parameter and the Consumer Secret as the `clientSecret` parameter.
 
-``` csharp
-app.UseSalesforceAuthentication(
-    clientId: "3MVG9Y6d_Btp4xp53rplRBM7p1TZype2R5VtcbI0TWlliEmJ1qf6_Hl6UIvCJhSZ0CBmFCqcZWu.oPVRnGuTo", 
-    clientSecret: "3446854973015261364");
-```
+	app.UseSalesforceAuthentication(
+	    clientId: "3MVG9Y6d_Btp4xp53rplRBM7p1TZype2R5VtcbI0TWlliEmJ1qf6_Hl6UIvCJhSZ0CBmFCqcZWu.oPVRnGuTo", 
+	    clientSecret: "3446854973015261364");
 
 It is important to ensure that these parameters match the values from SalesForce exactly, otherwise the authentication for your application will fail.
 

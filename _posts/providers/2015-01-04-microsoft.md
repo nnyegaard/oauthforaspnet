@@ -43,11 +43,9 @@ Once the application has been created you can navigate to the `Startup.Auth` fil
 
 Locate the lines of code which enables the Microsoft authentication (look for `app.UseMicrosoftAuthentication`) and uncomment it.  Take the values for the "Client ID" and "Client Secret" from your Live Connect application and pass it through as the `clientId` and `clientSecret` parameters for the `app.UseMicrosoftAccountAuthentication` method call:
 
-``` csharp
-app.UseMicrosoftAccountAuthentication(
-    clientId: "0000000044116236",
-    clientSecret: "nLut0Tya491C9y9m0bdmAPrbbrnS41yJ");
-```
+    app.UseMicrosoftAccountAuthentication(
+        clientId: "0000000044116236",
+        clientSecret: "nLut0Tya491C9y9m0bdmAPrbbrnS41yJ");
 
 It is important to ensure that these parameter match the values from Live Connect exactly, otherwise the Microsoft authentication for your application will fail.
 

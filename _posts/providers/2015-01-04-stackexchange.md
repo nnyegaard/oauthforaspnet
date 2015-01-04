@@ -61,18 +61,14 @@ Navigate to the `Startup.Auth` file located in the `App_Start` folder of your ap
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
-``` csharp
-using Owin.Security.Providers.StackExchange;
-```
+	using Owin.Security.Providers.StackExchange;
 
 Enable the StackExchange provider by making a call to the `app.UseStackExchangeAuthentication` method passing in the Client ID of your StackExchange application as the `clientId` parameter, the Client Secret as the `clientSecret` parameter and the Key as the `key` parameter.
 
-``` csharp
-app.UseStackExchangeAuthentication(
-    clientId: "3272",
-    clientSecret: "Zxcsu0KwTsDizsv72AZdZA((",
-    key: "r8LkgkG)rRAuCEit1jWwPw((");
-```
+	app.UseStackExchangeAuthentication(
+	    clientId: "3272",
+	    clientSecret: "Zxcsu0KwTsDizsv72AZdZA((",
+	    key: "r8LkgkG)rRAuCEit1jWwPw((");
 
 It is important to ensure that these parameters match the values from StackExchange exactly, otherwise the authentication for your application will fail.
 

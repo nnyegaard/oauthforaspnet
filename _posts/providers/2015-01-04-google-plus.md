@@ -71,17 +71,13 @@ Navigate to the `Startup.Auth` file located in the `App_Start` folder of your ap
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
-``` csharp
-using Owin.Security.Providers.GooglePlus;
-```
+	using Owin.Security.Providers.GooglePlus;
 
 Enable the Google+ provider by making a call to the `app.UseGooglePlusAuthentication` method passing in the Client ID of your Google+ project as the `clientId` parameter and the Client Secret as the `clientSecret` parameter.
 
-``` csharp
-app.UseGooglePlusAuthentication(
-    clientId: "320475075164-8mfueb58obfi6djdp2fmghuds8d18bbj.apps.googleusercontent.com",
-    clientSecret: "1mpLRt829Utmb-816GgL3GFP");
-```
+	app.UseGooglePlusAuthentication(
+	    clientId: "320475075164-8mfueb58obfi6djdp2fmghuds8d18bbj.apps.googleusercontent.com",
+	    clientSecret: "1mpLRt829Utmb-816GgL3GFP");
 
 It is important to ensure that these parameters match the values from Google exactly, otherwise the Google+ authentication for your application will fail.
 
