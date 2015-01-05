@@ -62,26 +62,30 @@ After the application has been created a screen will be displayed with the detai
 
 ![](/images/guides/salesforce/new-app-success.png)
 
-##Enabling SalesForce authentication in your ASP.NET MVC Application
+## Enabling SalesForce authentication in your ASP.NET MVC Application
 Returning to Visual Studio, navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
 ![](/images/guides/salesforce/navigate_startup_auth.png)
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
-	using Owin.Security.Providers.SalesForce;
+{% highlight csharp %}
+using Owin.Security.Providers.SalesForce;
+{% endhighlight %}
 
 Enable the SalesForce provider by making a call to the `app.UseSalesforceAuthentication` method passing in the Consumer Key of your SalesForce application as the `clientId` parameter and the Consumer Secret as the `clientSecret` parameter.
 
-	app.UseSalesforceAuthentication(
-	    clientId: "3MVG9Y6d_Btp4xp53rplRBM7p1TZype2R5VtcbI0TWlliEmJ1qf6_Hl6UIvCJhSZ0CBmFCqcZWu.oPVRnGuTo", 
-	    clientSecret: "3446854973015261364");
+{% highlight csharp %}
+app.UseSalesforceAuthentication(
+    clientId: "3MVG9Y6d_Btp4xp53rplRBM7p1TZype2R5VtcbI0TWlliEmJ1qf6_Hl6UIvCJhSZ0CBmFCqcZWu.oPVRnGuTo", 
+    clientSecret: "3446854973015261364");
+{% endhighlight %}
 
 It is important to ensure that these parameters match the values from SalesForce exactly, otherwise the authentication for your application will fail.
 
 ![](/images/guides/salesforce/keys-matchup.png)
 
-##Testing the application
+## Testing the application
 You have now created an application in SalesForce and enabled the SalesForce authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 Be sure to navigate to the **secure** (i.e. HTTPS) address for your website. In this example it is `https://localhost:44300`

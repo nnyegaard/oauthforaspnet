@@ -25,7 +25,7 @@ After the application has been created, navigate to the "App Settings" tab and t
 
 We will need to come back to the application settings in the Live Connect Developer Center a bit later to do configuration of the Redirect URLs, so you can leave the browser window open for now.
 
-##Enabling Microsoft authentication in your ASP.NET MVC Application
+## Enabling Microsoft authentication in your ASP.NET MVC Application
 The next step is to add the Microsoft login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
 ![](/images/guides/microsoft/new_project.png)
@@ -42,15 +42,17 @@ Once the application has been created you can navigate to the `Startup.Auth` fil
 
 Locate the lines of code which enables the Microsoft authentication (look for `app.UseMicrosoftAuthentication`) and uncomment it.  Take the values for the "Client ID" and "Client Secret" from your Live Connect application and pass it through as the `clientId` and `clientSecret` parameters for the `app.UseMicrosoftAccountAuthentication` method call:
 
-    app.UseMicrosoftAccountAuthentication(
-        clientId: "0000000044116236",
-        clientSecret: "nLut0Tya491C9y9m0bdmAPrbbrnS41yJ");
+{% highlight csharp %}
+app.UseMicrosoftAccountAuthentication(
+    clientId: "0000000044116236",
+    clientSecret: "nLut0Tya491C9y9m0bdmAPrbbrnS41yJ");
+{% endhighlight %}
 
 It is important to ensure that these parameter match the values from Live Connect exactly, otherwise the Microsoft authentication for your application will fail.
 
 ![](/images/guides/microsoft/keys_matchup.png)
 
-##Enabling redirection to your localhost
+## Enabling redirection to your localhost
 We need to specify the Redirect URL for your application in the Live Connect Developer Center. This is an extra security measure to ensure that redirection only happens to your application. The is a bit of a problem however as this redirect URL will point to the `localhost` domain while we are testing the application locally, and the Live Connect Developer Center does not allow us to specify a redirect URL which points to the `localhost` domain.  A bit of smoke and mirrors is needed from us to make this work as we essentially have to redirect a *proper* domain to our localhost domain.
 
 First we need to determine the domain on which our application is running locally.  Right click on your web project in Visual Studio and select 'Properties".  In the properties windows navigate to the "Web" tab and take note of your application URL in the "Project Url" field:
@@ -63,7 +65,7 @@ Next we need to complete a couple of steps:
 - Add URL to the Access Control List
 - Lastly we will need to configure the project to run on the new URL
 
-###Redirect a "proper" URL to localhost
+### Redirect a "proper" URL to localhost
 Open the Notepad application in Windows, but make sure that you run it in Administrator mode.
 
 ![](/images/guides/microsoft/notepad_administrator.png)
@@ -74,7 +76,7 @@ Add an entry to the hosts file which resolves the domain name your pick to the I
 
 Save your hosts file and close Notepad.
 
-###Configure IIS Express
+### Configure IIS Express
 IIS Express needs to be configured to bind this new domain name to our website.  You need to make sure that IIS Express is not running at this point in time.
 
 Open the IIS Express configuration file which is located at `%USERPROFILE%\My Documents\IISExpress\config\applicationhost.config` in a text editor or even Visual Studio.
@@ -105,7 +107,7 @@ Under the `<bindings>` section we need to add a line similar to the current one 
 
 Save and close the configuration file.
 
-###Add URL to the Access Control List
+### Add URL to the Access Control List
 At this point in time the security mechanisms in Windows will not allow us to browse to this URL on the specified port.  One alternative is to run Visual Studio (and hence IIS Express) as Administrator, but I do not like that. There is a very simple alternative and that is to add the URL to the Access Control List.
 
 Open a Command Prompt **with elevated priviledges** by running it as Administrator.  Run the following command from the command prompt to add the domain to the ACL.  Be sure to specify the URL you chose and also be sure the **add the trailing backslash** to the URL otherwise the command will not execute.
@@ -118,12 +120,12 @@ You will receive a message indicating that the URL reservation has been added if
 
 ![](/images/guides/microsoft/acl_command_prompt.png)
 
-###Configure the project to run on the new URL
+### Configure the project to run on the new URL
 The final bit is to ensure that when our project runs, it does so on the new URL.  Once again navigate to your project properties page and update the "Project URL" field (which should currently be set to something like `http://localhost:2388` to be the new URL we configured.  In my case this is `http://localdev.beabigrockstar.com:2388`.
 
 ![](/images/guides/microsoft/project_properties_updated_project_url.png)
 
-##Specifying the Redirect URL in Live Connect Developer Center
+## Specifying the Redirect URL in Live Connect Developer Center
 Hopefully you have made it this far without giving up in frustration.  Hand on we're almost there! The final bit before we can test the application is to specify the correct Redirect URL for the application.  Head back to the Live Connect Developer Center and open your application settings.  Click on the API Setting tab on the left.
 
 In the "Redirect URLs" field you must specify the domain we configured with the path "signin-microsoft" appended.  In our example this URL will be `http://localdev.beabigrockstar.com:2388/signin-microsoft`.
@@ -132,7 +134,7 @@ In the "Redirect URLs" field you must specify the domain we configured with the 
 
 Click the Save button.
 
-##Testing the application
+## Testing the application
 You have now created an application in Connect Live and enabled the Microsoft authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
@@ -153,5 +155,5 @@ Click on the "Yes" button.  You will be redirected back to your application and 
 
 Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your Microsoft account in the future.
 
-##Using Microsoft Login in production
+## Using Microsoft Login in production
 When you want to use Microsoft login in production you will need to create a separate application in the Live Connect Developer Center.  You will do this for each different environment, as each will have its own redirect URL.  This setup is also better for security purposes as you can limit the people who have knowledge of the Client ID and Secret of the production application to a much smaller group.

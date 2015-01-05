@@ -47,7 +47,7 @@ You will be displayed summary information about the new Client ID which you crea
 
 We will also be returning to this screen later on to specify a valid callback URI as this will be needed for the Google+ OAuth authentication to work correctly.
 
-##Enabling Google+ authentication in your ASP.NET MVC Application
+## Enabling Google+ authentication in your ASP.NET MVC Application
 The next step is to add the Google+ login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
 ![](/images/guides/google-plus/new_project.png)
@@ -70,19 +70,23 @@ Navigate to the `Startup.Auth` file located in the `App_Start` folder of your ap
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
-	using Owin.Security.Providers.GooglePlus;
+{% highlight csharp %}
+using Owin.Security.Providers.GooglePlus;
+{% endhighlight %}
 
 Enable the Google+ provider by making a call to the `app.UseGooglePlusAuthentication` method passing in the Client ID of your Google+ project as the `clientId` parameter and the Client Secret as the `clientSecret` parameter.
 
-	app.UseGooglePlusAuthentication(
-	    clientId: "320475075164-8mfueb58obfi6djdp2fmghuds8d18bbj.apps.googleusercontent.com",
-	    clientSecret: "1mpLRt829Utmb-816GgL3GFP");
+{% highlight csharp %}
+app.UseGooglePlusAuthentication(
+    clientId: "320475075164-8mfueb58obfi6djdp2fmghuds8d18bbj.apps.googleusercontent.com",
+    clientSecret: "1mpLRt829Utmb-816GgL3GFP");
+{% endhighlight %}
 
 It is important to ensure that these parameters match the values from Google exactly, otherwise the Google+ authentication for your application will fail.
 
 ![](/images/guides/google-plus/keys_matchup.png)
 
-##Specifying the authorization callback URL for your project
+## Specifying the authorization callback URL for your project
 In order for the Google+ authentication to work your need to specify the correct authorization callback URL in GitHub for your application.
 
 First we need to get the domain for out website. Right click on your web project in Visual Studio and select 'Properties".  In the properties windows navigate to the "Web" tab and copy your application URL in the "Project Url" field:
@@ -99,7 +103,7 @@ In the "Authorized redirect URI" field, specify the URL of your application, app
 
 > You are able to specify more than one URL, so when you go into production you can just add the URL for your production URL to the list.  It is however strongly recommended that you have different ID's, and perhaps even different Google API projects, for your development and production systems. This setup is also better for security purposes as you can limit the people who have knowledge of the Client ID and Secret of the production application to a much smaller group.
 
-##Setting up the Google Consent screen
+## Setting up the Google Consent screen
 One final bit of configuration on the Google side is needed and that is to specify and name and email address for your application which will be used in the Google consent screen when Google prompts your users for permissions.
 
 Click to the "Consent" menu in the sidebar menu of the Google Developer Console.
@@ -110,7 +114,7 @@ Select an email address and specify a name for your application.  This informati
 
 ![](/images/guides/google-plus/google_console_consent_screen.png)
 
-##Testing the application
+## Testing the application
 You have now created a project in the Google Developer Console and enabled the Google+ authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.

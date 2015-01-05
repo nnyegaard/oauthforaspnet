@@ -37,7 +37,7 @@ After the application has been created a screen will be displayed with the detai
 
 ![](/images/guides/stackexchange/register-app-success.png)
 
-##Enabling StackExchange authentication in your ASP.NET MVC Application
+## Enabling StackExchange authentication in your ASP.NET MVC Application
 The next step is to add the StackExchange login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
 ![](/images/guides/stackexchange/new_project.png)
@@ -60,21 +60,25 @@ Navigate to the `Startup.Auth` file located in the `App_Start` folder of your ap
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
-	using Owin.Security.Providers.StackExchange;
+{% highlight csharp %}
+using Owin.Security.Providers.StackExchange;
+{% endhighlight %}
 
 Enable the StackExchange provider by making a call to the `app.UseStackExchangeAuthentication` method passing in the Client ID of your StackExchange application as the `clientId` parameter, the Client Secret as the `clientSecret` parameter and the Key as the `key` parameter.
 
-	app.UseStackExchangeAuthentication(
-	    clientId: "3272",
-	    clientSecret: "Zxcsu0KwTsDizsv72AZdZA((",
-	    key: "r8LkgkG)rRAuCEit1jWwPw((");
+{% highlight csharp %}
+app.UseStackExchangeAuthentication(
+    clientId: "3272",
+    clientSecret: "Zxcsu0KwTsDizsv72AZdZA((",
+    key: "r8LkgkG)rRAuCEit1jWwPw((");
+{% endhighlight %}
 
 It is important to ensure that these parameters match the values from StackExchange exactly, otherwise the authentication for your application will fail.
 
 
 ![](/images/guides/stackexchange/keys-matchup.png)
 
-##Testing the application
+## Testing the application
 You have now created an application in StackExchange and enabled the StackExchange authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
