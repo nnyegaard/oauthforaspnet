@@ -2,16 +2,15 @@
 layout: provider
 title:  Google+
 logo: google-plus.png
-categories: providers
 ---
-##Introduction
+## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Google+.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
 Even though ASP.NET MVC 5 has support for social logins built in, it does not have support for Google+ out of the box. Support for Google+ authentication is available through an open source NuGet package. This guide will help you through the process of enabling Google+ signin in your application in a step-by-step manner.
 
 To follow this guide you will need to have a Google account.  If you do not have an account then head on over to the [Google Accounts page](https://accounts.google.com) and register before you continue any further.
 
-##Registering a project in Google+
+## Registering a project in Google+
 In order for you to use Google+ as an external authentication provider in your website, you will need to create a project in the Google Developer Console.  Head on over to the [Google Developer Console](https://console.developers.google.com).  
 
 You will see a list of your current projects, if any.  Click on the "Create Project" button.

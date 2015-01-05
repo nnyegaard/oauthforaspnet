@@ -2,16 +2,15 @@
 layout: provider
 title:  Stack Exchange
 logo: stackexchange.png
-categories: providers
 ---
-##Introduction
+## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook and Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
 ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  This guide will help you through the process of allowing users to log in with their StackExchange account in a step-by-step manner.
 
 To follow this guide you will need to have a StackExchange account.  If you do not have an account then head on over to the [StackExchange Homepage](http://stackexchange.com/) and register before you continue any further.
 
-##Registering an application in StackExchange
+## Registering an application in StackExchange
 In order for your application to use StackExchange as a login mechanism you will need to create an application on the StackExchange API (Stack Apps) website.  To do this head over to the [StackExchange API Website](http://api.stackexchange.com/). 
 
 Click on the "Register for An App Key" link.

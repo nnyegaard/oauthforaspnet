@@ -2,16 +2,15 @@
 layout: provider
 title:  SalesForce
 logo: salesforce.png
-categories: providers
 ---
-##Introduction
+## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook and Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
 ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  This guide will help you through the process of allowing users to log in with their SalesForce account in a step-by-step manner.
 
 To follow this guide you will need to have a SalesForce Developer account.  If you do not have an account then head on over to the [SalesForce Developer SignUp Page](https://developer.salesforce.com/en/signup) and register before you continue any further.
 
-##Creating a new ASP.NET MVC Application
+## Creating a new ASP.NET MVC Application
 The first step is to create a new ASP.NET MVC application and enable HTTPS for the application. In Visual Studio, go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
 ![](/images/guides/salesforce/new_project.png)
@@ -34,7 +33,7 @@ Select your project in the Solution Explorer and press F4 to view the Properties
 
 ![](/images/guides/salesforce/properties-ssl.png) 
 
-##Registering an application in SalesForce
+## Registering an application in SalesForce
 In order for your application to use SalesForce as a login mechanism you will need to create an application in SalesForce.  To do this, log in to SalesForce and go to the Setup area.
 
 In the navigation pane on the left hand side, navigate to Build > Create and click on the Apps link.  

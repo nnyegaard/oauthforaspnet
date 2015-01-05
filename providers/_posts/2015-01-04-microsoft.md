@@ -2,16 +2,15 @@
 layout: provider
 title:  Microsoft
 logo: microsoft.png
-categories: providers
 ---
-##Introduction
+## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook, Twitter or even your Microsoft account.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
 ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  This guide will help you through the process of allowing users to log in with their Microsoft account in a step-by-step manner.
 
 To follow this guide you will need to have a Microsofr Live account.  If you do not have an account then head on over to the [Microsoft Live Account Page](http://account.live.com) and register before you continue any further.
 
-##Registering your application
+## Registering your application
 To register a new Microsoft Live application go to the [Live Connect Developer Center applications page](https://account.live.com/developers/applications).  This page will list not only your web based applications you created, but also any applications you created in the Windows or Windows Phone Developer Centers.  If you do not yet have any applications created you will immediately be taken to the new application creation screen.  Alternatively click on the "Create application" link.
 
 ![](/images/guides/microsoft/live_create_application_link.png)
