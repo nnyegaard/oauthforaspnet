@@ -2,6 +2,16 @@
 layout: provider
 title:  SalesForce
 logo: salesforce.png
+links: 
+  - name: SalesForce Home Page
+    url: http://www.salesforce.com/
+  - name: SalesForce Developer Page
+    url: https://developer.salesforce.com/
+sdks:
+  - name: Web Services API
+    url: https://developer.salesforce.com/page/Web_Services_API
+  - name: Force.com Toolkit for Azure
+    url: https://developer.salesforce.com/page/Getting_Started_with_the_Force.com_Toolkit_for_Azure
 ---
 ## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook and Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.

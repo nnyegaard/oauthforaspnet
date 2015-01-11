@@ -2,6 +2,9 @@
 layout: provider
 title:  Microsoft
 logo: microsoft.png
+links:
+  - name: List of OAuth Applications
+    url: https://account.live.com/developers/applications/index
 ---
 ## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook, Twitter or even your Microsoft account.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
