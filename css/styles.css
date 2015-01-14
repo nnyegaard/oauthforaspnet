@@ -8995,21 +8995,22 @@ ul.table-of-contents a.active {
   #provider-list li {
     width: 50%; } }
 
-header.provider-title h2 {
+header.provider-title h1 {
   border-bottom: 1px solid rgba(160, 160, 160, 0.6);
   font-weight: 300;
-  padding-bottom: 20px; }
+  font-size: 3em;
+}
 
 .provider-guide h2 {
-    font-size: 2.8rem;
-    line-height: 3rem;
-  font-weight: 400;
+    font-size: 2rem;
+    line-height: 2.4rem;
+  font-weight: 300;
    }
 
 .provider-guide h3 {
-    font-size: 2rem;
-    line-height: 2.2rem;
-  font-weight: 300;
+    font-size: 1.6rem;
+line-height: 1.8rem;
+font-weight: 400;
    }
 
 h5.provider-sidebar-header {
@@ -9031,6 +9032,12 @@ ul.provider-sidebar-list {
 
 
 /* SYNTAX HIGHLIGHTING */
+.highlight {
+  padding: 9px;
+}
+.highlight pre {
+  margin: 0;
+}
 code {
 padding: 2px 4px;
 font-size: 90%;
