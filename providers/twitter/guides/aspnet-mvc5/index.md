@@ -1,24 +1,8 @@
 ---
-layout: provider
-title: Twitter
-logo: twitter.png
-links:
-  - name: Twitter Home Page
-    url: https://www.twitter.com
-  - name: Twitter Developer Home
-    url: http://dev.twitter.com/
-  - name: Registered OAuth Applications
-    url: https://apps.twitter.com/
-  - name: API Test Console
-    url: https://dev.twitter.com/rest/tools/console
-sdks:
-  - name: Linq2Twitter
-    url: http://linqtotwitter.codeplex.com/
-  - name: Tweetinvi
-    url: https://tweetinvi.codeplex.com/
-  - name: Tweetsharp (deprecated)
-    url: https://github.com/danielcrenna/tweetsharp
+layout: guide
+title:  "Walkthrough: Configuring Twitter Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
+
 ## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 

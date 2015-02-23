@@ -1,15 +1,8 @@
 ---
-layout: provider
-title:  OpenID
-logo: openid.png
-links:
-  - name: OpenID Home Page
-    url: http://openid.net/
-  - name: OpenID Connect Page
-    url: http://openid.net/connect/
-  - name: OpenID Developers Page
-    url: http://openid.net/developers/
+layout: guide
+title:  "Walkthrough: Configuring OpenID Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
+
 > This guide was kindly developed by Jérémie Bertrand. Feel free to reach out to him on [Twitter](https://www.twitter.com/laedit) or his [blog](http://www.laedit.net/).
 
 ## Introduction

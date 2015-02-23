@@ -1,15 +1,6 @@
 ---
-layout: provider
-title:  Yahoo
-logo: yahoo.png
-links:
-  - name: Yahoo Home Page
-    url: http://yahoo.com/
-  - name: Yahoo Developer Page
-    url: https://developer.yahoo.com/
-  - name: Registered OAuth Apps
-    url: https://developer.apps.yahoo.com/projects
-
+layout: guide
+title:  "Walkthrough: Configuring Yahoo Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
 
 ## Introduction

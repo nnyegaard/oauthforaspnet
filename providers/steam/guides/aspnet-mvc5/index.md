@@ -1,12 +1,6 @@
 ---
-layout: provider
-title:  Steam
-logo: steam.png
-links:
-  - name: Steam Home Page
-    url: http://store.steampowered.com/
-  - name: Steam Developer Communite
-    url: http://steamcommunity.com/dev
+layout: guide
+title:  "Walkthrough: Configuring Steam Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
 > This guide was kindly developed by Jérémie Bertrand. Feel free to reach out to him on [Twitter](https://www.twitter.com/laedit) or his [blog](http://www.laedit.net/).
 

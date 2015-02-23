@@ -1,18 +1,8 @@
 ---
-layout: provider
-title:  Google+
-logo: google-plus.png
-links:
-  - name: Google Developer Home
-    url: https://developers.google.com/
-  - name: Google Developers Console
-    url: https://console.developers.google.com/project
-  - name: Google APIs Explorer
-    url: https://developers.google.com/apis-explorer
-sdks:
-  - name: Google APIs Client Library for .NET
-    url: https://developers.google.com/api-client-library/dotnet/apis/
+layout: guide
+title:  "Walkthrough: Configuring Google Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
+
 ## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Google+.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 

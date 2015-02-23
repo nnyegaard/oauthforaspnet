@@ -1,16 +1,8 @@
 ---
-layout: provider
-title:  Facebook
-logo: facebook.png
-links:
-  - name: Facebook Home
-    url: https://www.facebook.com
-  - name: Facebook Developer Home
-    url: https://developers.facebook.com
-sdks:
-  - name: Facebook SDK for .NET
-    url: http://facebooksdk.net/docs/web/
+layout: guide
+title:  "Walkthrough: Configuring Facebook Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
+
 ## Introduction
 A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
