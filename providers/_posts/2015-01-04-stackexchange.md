@@ -9,6 +9,6 @@ links:
     url: http://api.stackexchange.com/
   - name: Registered OAuth applications
     url: https://stackapps.com/apps/oauth
-guide: /stackexchange/guide-mvc5
+guide: /stackexchange/guides/aspnet-mvc5
 ---
 
