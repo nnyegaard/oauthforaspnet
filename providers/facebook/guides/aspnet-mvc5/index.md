@@ -4,125 +4,102 @@ title:  "Walkthrough: Configuring Facebook Sign-In for ASP.NET MVC 5 and Visual 
 ---
 
 ## Introduction
-A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
-ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  This guide will help you through the process of allowing users to log in with their Facebook account in a step-by-step manner.
+In order to enable OAuth signin with Facebook and allow users of your application to sign in with their Facebook account, you will need to register an application in the Facebook Developer Portal. After you have registered the application you can use the `App ID` and `App Secret` supplied by Facebook to register the Facebook social login provider in your ASP.NET MVC application.
 
-To follow this guide you will need to have a Facebook account.  If you do not have an account then head on over to the [Facebook Homepage](http://www.facebook.com) and register before you continue any further.
+This guide will walk you through the entire process from end-to-end. This guide does not cover any advanced Facebook integration topics, but only covers OAuth signin with Facebook.
 
-## Registering as a Facebook App Developer
-Before you can add Facebook login to your web application you will need to register an application in Facebook, and before you can do that you will need to be registered as a Facebook Developer.  To register as a Facebook developer simply head on over to the [Facebook Developers Page](https://developers.facebook.com/).  Click on the "Register Now" button in the top right corner to add Facebook developer capabilities to your Facebook account.
+## Creating a new ASP.NET MVC application
 
-![](/images/guides/facebook/register_facebook_developer.png)
+If you do not yet have an ASP.NET MVC application, you will need to create one. In Visual Studio go to the File menu and select New > Project.
 
-You will be guided through the rest of the process by proceeding through a set of steps.  The first step is to accept the Facebook Platform Policy and the Facebook Privacy Policy.
+![](/images/guides/facebook/mvc5/file-new-project.png)
 
-![](/images/guides/facebook/register_facebook_developer_step_1.png)
+Select the "ASP.NET Web Application" project template. Specify the name and location for your project and click on the OK button.
 
-The next step is to verify your account by associating your mobile phone number with your account.  This is to verify firstly that you are a real person and also to prevent you from registering multiple Facebook developer accounts (or even multiple Facebook accounts for that matter).
+![](/images/guides/facebook/mvc5/new-project-dialog.png)
 
-![](/images/guides/facebook/register_facebook_developer_step_2.png)
+For the template select MVC and make sure that the Authentication setting is set to "Individual Accounts". Click OK.
 
-After verifying your account you will be prompted to share some additional information about yourself with Facebook.
+![](/images/guides/facebook/mvc5/aspnet-project-type-dialog.png)
 
-![](/images/guides/facebook/register_facebook_developer_step_3.png)
+After the project has been created, go to the web application's properties dialog and take note of the "Project Url", as you will need this when specifying the OAuth callback URL in Facebook.
 
-The last step is just confirmation that you have successfully registered.
-
-![](/images/guides/facebook/register_facebook_developer_step_4.png)
+![](/images/guides/facebook/mvc5/project-properties.png)
 
 ## Registering your application
 
-To register a new Facebook application head over to the [Facebook Developer page](https://developer.facebook.com) and select "Create a New App" from the Apps menu at the top of the page.
+To register a new Facebook application head over to the [Facebook Developers website](https://developers.facebook.com) and select "Add a New App" from the Apps menu at the top of the page.
 
-![](/images/guides/facebook/create_new_app_menu.png)
+> If you have not registered as a Facebook developer before, you will be prompted to go through the developer registration process before you can add a new application.
 
-Complete the information on the "Create the New App" dialog by supplying the name of your application as well as selecting the relevant Category for your web application. 
+![](/images/guides/facebook/mvc5/add-new-app-menu.png)
 
-![](/images/guides/facebook/create_new_app.png)
+You will be prompted to select the platform for which you want to create an application. Select "advanced setup".
 
-Click on the "Create App" button and fill in the information for the security check when prompted for it.
+![](/images/guides/facebook/mvc5/platform-type-selection.png)
 
-You will be taken to a page displaying the dashboard for your application. Click on the "Settings" menu in the left hand navigation bar.
+Complete the information on the "Create a New App ID" dialog by supplying the name of your application and optionally a namespace, as well as selecting the relevant Category. Click the Create App ID button.
 
-![](/images/guides/facebook/create_new_app_settings_menu.png)
+![](/images/guides/facebook/mvc5/add-new-app-menu.png)
 
-Take note of the values for the "App ID" and "App Secret" fields as your will need these when enabling Facebook login in your ASP.NET MVC application.  To view the App Secret click on the "Show" button next the the app secret.
+After the application is created you will need to ensure that your application is enabled for OAuth (which it is by default), and also specify the correct OAuth Redirect URI.
 
-![](/images/guides/facebook/app_id_and_secret.png)
+Click on the Settings menu on the sidebar and go to Advanced tab.
 
-> Please note that Facebook apps now have to go through an approval process before they can be made live. For the most up to date instructions please refer to the Facebook documentation at https://developers.facebook.com/docs/apps/review. Furthermore you should also take note that once you are ready to go live with your app your will have to take it out Development Mode and make it Live. More info on the app lifecycle can be found at https://developers.facebook.com/docs/games/bestpractice/managing-development-cycle.
+![](/images/guides/facebook/mvc5/settings-advanced-tab.png)
+
+Go to the Security section of the page and make sure that "Client OAuth Login" is enabled. You will also need to specify a valid URI. This will be the URL for you application, with the `/signin-facebook` suffix. For you local development environment, this will be something like `http://localhost:4515/signin-facebook`.
+
+![](/images/guides/facebook/mvc5/oauth-settings.png)
+
+Next you will need to get the App ID and App Secret so you can register the Facebook provider in your ASP.NET application. Go back to the Facebook application's dashboard and copy the values of the App ID and App Secret. (You will first need to click on the "Show" button in the App Secret field to display the value of the App Secret).
+
+![](/images/guides/facebook/mvc5/app-id-and-secret.png)
 
 ## Enabling Facebook authentication in your ASP.NET MVC Application
-The next step is to add the Facebook login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
-![](/images/guides/facebook/new_project.png)
+Go back to your ASP.NET application and navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
-Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts".  Click "OK".
+![](/images/guides/facebook/mvc5/solution-explorer-startup-auth.png)
 
-![](/images/guides/facebook/new_project_mvc.png)
-
-> After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
-
-Once the application has been created you can navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
-
-![](/images/guides/facebook/navigate_startup_auth.png)
-
-Locate the lines of code which enables the Facebook authentication (look for `app.UseFacebookAuthentication`) and uncomment it.  Take the values for the "App Id" and "App Secret" from your Facebook application and pass it through as the parameters for the `app.UseFacebookAuthentication` method call:
+In the `ConfigureAuth` method, below all the existing code add the following lines of code:
 
 {% highlight csharp %}
-app.UseFacebookAuthentication(
-	appId: "315934731886834",
-	appSecret: "09cc8d6dcdc0e916d070f82fcce8bf43");
+app.UseFacebookAuthentication("1605576099672491", "a3bd8e42104c3ec7d2260b831f3ef51f");
 {% endhighlight %}
 
-It is important to ensure that these parameter match the values from Facebook exactly, otherwise the Facebook authentication for your application will fail.
-
-![](/images/guides/facebook/activation_code_matchup.png)
-
-## Enabling the application domain in Facebook
-When Facebook is used as authentication for your application it validates that the request for authentication has originated from a valid domain which you specify.  This means that you will need to register your application's website domain against your Facebook application.  
-
-First we need to get the domain for out website. Right click on your web project in Visual Studio and select 'Properties".  In the properties windows navigate to the "Web" tab and copy your application URL in the "Project Url" field:
-
-![](/images/guides/facebook/project_properties.png)
-
-Return to the Facebook Developer website and go to the application settings page for your Facebook Application. Click on the "Add Platform" button.
-
-![](/images/guides/facebook/add_platform_button.png)
-
-Select "Website"
-
-![](/images/guides/facebook/select_platform.png)
-
-Enter the URL for your website which you copied form your Visual Studio project properties into the "Site URL" field.  
-
-![](/images/guides/facebook/facebook_website_details.png)
-
-Click on the "Save Changes" button.
+Make sure that the values you pass in for the `appId` and `appSecret` parameters are **exactly** the same as the values which were supplied by Facebook when registering the application.
 
 ## Testing the application
 You have now created an application in Facebook and enabled the Facebook authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
 
-![](/images/guides/facebook/application_start_screen.png)
+![](/images/guides/facebook/mvc5/application-start-screen.png)
 
 Under the "Use another service to log in" section you will see a button which allows you to log in with Facebook.  Click the "Facebook" button.
 
-![](/images/guides/facebook/application_login_screen.png)
+![](/images/guides/facebook/mvc5/application-login-screen.png)
 
-You will be redirected to the Facebook website.  If you are not logged in to Facebook yet you will be prompted to do so.  Facebook will then prompt you to give the application permissions to access your public profile and friends list.
+You will be redirected to the Facebook website.  If you are not logged in to Facebook yet you will be prompted to do so.  Facebook will then prompt you to give the application permissions to access your public profile.
 
-![](/images/guides/facebook/facebook_permission.png)
+![](/images/guides/facebook/mvc5/facebook-permission.png)
 
 Click on the "Okay" button.  You will be redirected back to your application and will need to supply your email address to complete the registration process.
 
-![](/images/guides/facebook/complete_registration.png)
+![](/images/guides/facebook/mvc5/complete-registration.png)
 
 Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your Facebook account in the future.
 
-## A final note about the Facebook application registration process
-As noted in the section above you need to register you website's domain in the Facebook application.  You can however only register a single website domain for an application which work fine while you develop, but once you go into production it proves to be a problem as you cannot register both your `localhost` domain as well as your `.com` domain.
+## A final note about the Facebook application registration and review process
 
-It is therefore suggested that you create two applications.  One for development and one for production, each with its own domain. This setup is also better for security purposes as you can limit the people who have knowledge of the Application ID and Secret of the production application to a much smaller group.
+As noted earlier in the application, you will need to supply Facebook with the redirect URI for your application. You can enter multiple URIs, for example one for development and one for production, but this is not advised. I will suggest that you rather register two separate applications in Facebook; one for production and one for development, each with their own settings and a different **App ID** and **App Secret**. 
+
+This approach is also better from a security standpoint as you can limit the number of people who have access to the **App ID** and **App Secret** since you do not have to give it to all your developers, or have it checked into source control.
+
+Facebook also has another way to manage this, by allowing you to add test applications. On your application's settings page, on the left navigation bar, navigate to the "Test Apps" menu item. From there you can add test applications, for development or testing purposes for example. Each test application has its own separate App ID, App Secret and redirect URI.
+
+### And a final, very important note...
+
+One final thing to take note of is that before you can make you application live (so other people can log in with it), it will have to go through a review process by Facebook. For more information on how this works, you can read the [Login Review](https://developers.facebook.com/docs/apps/review/login) document on the Facebook website.
