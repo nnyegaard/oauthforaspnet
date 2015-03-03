@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Twitter;
 using OAuthDemoMVC5.Models;
 using Owin;
+using Owin.Security.Providers.GitHub;
 
 namespace OAuthDemoMVC5
 {
@@ -46,17 +47,39 @@ namespace OAuthDemoMVC5
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
+
+            /*---------------------------------------------------------------------------------
+             * Configuration of the various providers
+             *--------------------------------------------------------------------------------- */
+
             // Configure Facebook
             ConfigureFacebook(app);
 
+            // Configure GitHub
+            ConfigureGitHub(app);
+
             // Configure Twitter
             ConfigureTwitter(app);
+
+        }
+
+        private void ConfigureGitHub(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            app.UseGitHubAuthentication("Your client ID", "Your client secret");
+
         }
 
         private void ConfigureFacebook(IAppBuilder app)
         {
-            // Normal Configuration
-            app.UseFacebookAuthentication("Your App ID", "Your App Secret");
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseFacebookAuthentication("Your App ID", "Your App Secret");
 
             /* -------------------------------------------------------------------------------
              * Request extra permissions
@@ -71,7 +94,9 @@ namespace OAuthDemoMVC5
             //app.UseFacebookAuthentication(options);
 
             /* -------------------------------------------------------------------------------
-             * Specify an alternate callback path
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in Facebook
+             * matches this exactly
              * ------------------------------------------------------------------------------- */
 
             //var options = new FacebookAuthenticationOptions
@@ -110,7 +135,11 @@ namespace OAuthDemoMVC5
 
         private void ConfigureTwitter(IAppBuilder app)
         {
-            app.UseTwitterAuthentication("Your Consumer Key", "Your Consumer Secret");
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseTwitterAuthentication("Your Consumer Key", "Your Consumer Secret");
 
             /* -------------------------------------------------------------------------------
              * Specify an alternate callback path
