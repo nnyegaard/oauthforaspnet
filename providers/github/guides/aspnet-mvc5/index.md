@@ -4,57 +4,59 @@ title:  "Walkthrough: Configuring GitHub Sign-In for ASP.NET MVC 5 and Visual St
 ---
 
 ## Introduction
-A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook or Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
-ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  If you develop an application which is geared towards developers you may want to allow your users to sign in to your application using GitHub.  
+In order to enable OAuth signin with GitHub and allow users of your application to sign in with their GitHub account, you will need to register an application in GitHub. After you have registered the application you can use the **Client ID** and **Client Secret** supplied by GitHub to register the GitHub social login provider in your ASP.NET MVC application.
 
-ASP.NET MVC 5 does not support signing in with GitHub as part of the standard external authentication services, but support for GitHub authentication is available through an open source NuGet package. This guide will help you through the process of enabling GitHub signin in your application in a step-by-step manner.
+This guide will walk you through the entire process from end-to-end. This guide does not cover any advanced GitHub integration topics, but only covers OAuth signin with GitHub.
 
-To follow this guide you will need to have a GitHub account.  If you do not have an account then head on over to the [GitHub Homepage](http://www.github.com) and register before you continue any further.
+## Creating a new ASP.NET MVC application
+
+If you do not yet have an ASP.NET MVC application, you will need to create one. In Visual Studio go to the File menu and select New > Project.
+
+![](/images/guides/github/mvc5/file-new-project.png)
+
+Select the "ASP.NET Web Application" project template. Specify the name and location for your project and click on the OK button.
+
+![](/images/guides/github/mvc5/new-project-dialog.png)
+
+For the template select MVC and make sure that the Authentication setting is set to "Individual Accounts". Click OK.
+
+![](/images/guides/github/mvc5/aspnet-project-type-dialog.png)
+
+After the project has been created, go to the web application's properties dialog and take note of the "Project Url", as you will need this when specifying the Authorization callback URL in GitHub.
+
+![](/images/guides/github/mvc5/project-properties.png)
 
 ## Registering an application in GitHub
-In order for you to use GitHub as an external authentication provider in your website, you will need to create an application in GitHub.  Sign in to your GitHub account and navigate to your Account settings by clicking on the Account Settings icon on the top right of the GitHub website.
+In order for you to use GitHub as an OAuth authentication provider in your website, you will need to create an application in GitHub.  Sign in to your GitHub account and navigate to your Account settings by clicking on the Settings icon on the top right of the GitHub website.
 
-![](/images/guides/github/github_account_settings_menu.png)
+![](/images/guides/github/mvc5/account-settings-menu.png)
 
-Navigate to the Applications section by selection "Applications" in the Account Settings sidebar menu.
+Navigate to the Applications section by selection "Applications" in the Personal Settings sidebar menu.
 
-![](/images/guides/github/account_settings_sidebar.png)
+![](/images/guides/github/mvc5/account-settings-sidebar.png)
 
 In the "Developer applications" section click on the "Register new application" button.
 
-![](/images/guides/github/developer_applications_section.png)
+![](/images/guides/github/mvc5/developer-applications-section.png)
 
-Complete the name and homepage URL fields for your application and click the "Register application" button.
+Complete the name and homepage URL fields for your application. The **Authorization callback URL** is optional, but if you specify it, it must be the URL for you application, with the `/signin-github` suffix. For you local development environment, this will be something like `http://localhost:4515/signin-github`. After you have completed all the information, click the "Register application" button.
 
-![](/images/guides/github/github_application_registration.png)
-
-> The "Authorization callback URL" field will also need to be completed before the GitHub authentication can work correctly.  We cover this in the section below entitled "Specifying the authorization callback URL for your application"
+![](/images/guides/github/mvc5/application-registration.png)
 
 After the application registration is complete your will be redirected to the application page.  Take note of the "Client ID" and "Client Secret" as these will be needed when enabling the GitHub authentication in your ASP.NET MVC application.
 
-![](/images/guides/github/application_keys.png)
+![](/images/guides/github/mvc5/application-keys.png)
 
 ## Enabling GitHub authentication in your ASP.NET MVC Application
-The next step is to add the GitHub login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
-![](/images/guides/github/new_project.png)
+Next you need to install the **Owin.Security.Providers** Nuget package which contains the GitHub authentication provider.  Right click on your ASP.NET web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
-Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts".  Click "OK".
-
-![](/images/guides/github/new_project_mvc.png)
-
-> After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
-
-Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the GitHub authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
-
-![](/images/guides/github/nuget_package_dialog.png)
-
-> The **Owin.Security.Providers** Nuget package was developed by myself with contributions from others.  If you want to add extra functionality to any of the providers or add new providers for other services I would appreciate the contributions.  Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
+![](/images/guides/github/mvc5/nuget-package-dialog.png)
 
 Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
-![](/images/guides/github/navigate_startup_auth.png)
+![](/images/guides/github/mvc5/solution-explorer-startup-auth.png)
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
@@ -66,52 +68,36 @@ Enable the GitHub provider by making a call to the `app.UseGitHubAuthentication`
 
 {% highlight csharp %}
 app.UseGitHubAuthentication(
-	clientId: "f12bd74d4e0fd5a49976",
-	clientSecret: "8d5b4483d450c276349687e80f618d4069b3df65");
+    clientId: "bd06235dfad1d39835b4", 
+    clientSecret: "c6380b026dd4a120adeec21e11df26d5e1be296a");
 {% endhighlight %}
 
-It is important to ensure that these parameters match the values from GitHub exactly, otherwise the GitHub authentication for your application will fail.
-
-![](/images/guides/github/keys_matchup.png)
-
-## Specifying the authorization callback URL for your application
-In order for the GitHub authentication to work your need to specify the correct authorization callback URL in GitHub for your application.
-
-First we need to get the domain for out website. Right click on your web project in Visual Studio and select 'Properties".  In the properties windows navigate to the "Web" tab and copy your application URL in the "Project Url" field:
-
-![](/images/guides/github/project_properties.png)
-
-Open your application settings in GitHub and update the "Authorization Callback URL" field with the URL of your application, appending the path "/signin-github" to the URL as indicated in the screenshot below:
-
-![](/images/guides/github/update_github_application_callback.png)
-
-Click on the "Update application" button.
-
-> You can only specify one callback URL per application.  It is therefore suggested that you register separate applications for your development, production and other environments, each with its own callback URL.  More on this below in the section "A final note about the GitHub application registration process".
+Make sure that the values you pass in for the `clientId` and `clientSecret` parameters are **exactly** the same as the values which were supplied by GitHub when registering the application.
 
 ## Testing the application
 You have now created an application in GitHub and enabled the GitHub authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
 
-![](/images/guides/github/application_start_screen.png)
+![](/images/guides/github/mvc5/application-start-screen.png)
 
 Under the "Use another service to log in" section you will see a button which allows you to log in with GitHub.  Click the "GitHub" button.
 
-![](/images/guides/github/application_login_screen.png)
+![](/images/guides/github/mvc5/application-login-screen.png)
 
 You will be redirected to the GitHub website.  If you are not logged in to GitHub yet you will be prompted to do so.  GitHub will then prompt you to give the application permissions to access your personal user data.
 
-![](/images/guides/github/github_permission.png)
+![](/images/guides/github/mvc5/authorize-application.png)
 
 Click on the "Authorize application" button.  You will be redirected back to your application and will need to supply your email address to complete the registration process.
 
-![](/images/guides/github/complete_registration.png)
+![](/images/guides/github/mvc5/complete-registration.png)
 
 Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your GitHub account in the future.
 
 ## A final note about the GitHub application registration process
-As noted in the section above you need to register the authorization callback URL in the GitHub application.  This callback URL will obviously differ when your application is running on your development maching (i.e running on localhost) or when your application is running in production.  You can also only specify a single callback URL per application.
 
-It is therefore suggested that you create two applications.  One for development and one for production, each with its own callback URL. This setup is also better for security purposes as you can limit the people who have knowledge of the Client ID and Secret of the production application to a much smaller group.
+You are only allowed to specify one **Authorization callback URL** per application in GitHub, which means that you will not be able to use the same application in both your development and productions environments. So in a typical scenario where you have development, production and other environments such as testing, you will need to register a separate application in GitHub if you want to specify a callback URL.
+
+Doing it this way is in any case much better for security purposes as well, as you can limit the people who have knowledge of the Client ID and Secret of the production environment to a much smaller group.
 
