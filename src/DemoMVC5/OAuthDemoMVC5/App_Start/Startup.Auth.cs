@@ -69,7 +69,62 @@ namespace OAuthDemoMVC5
              * Normal configuration
              * ------------------------------------------------------------------------------- */
 
-            app.UseGitHubAuthentication("Your client ID", "Your client secret");
+            //app.UseGitHubAuthentication("Your client ID", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GitHubAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //};
+            //options.Scope.Add("user:email");
+            //app.UseGitHubAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in GitHub
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GitHubAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/github")
+            //};
+            //app.UseGitHubAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            var options = new GitHubAuthenticationOptions
+            {
+                ClientId = "Your client ID",
+                ClientSecret = "Your client secret",
+                Provider = new GitHubAuthenticationProvider
+                {
+                    OnAuthenticated = async context =>
+                    {
+                        // Retrieve the OAuth access token to store for subsequent API calls
+                        string accessToken = context.AccessToken;
+
+                        // Retrieve the username
+                        string gitHubUserName = context.UserName;
+
+                        // Retrieve the user's email address
+                        string gitHubEmailAddress = context.Email;
+
+                        // You can even retrieve the full JSON-serialized user
+                        var serializedUser = context.User;
+                    }
+                }
+            };
+            app.UseGitHubAuthentication(options);
+
 
         }
 
