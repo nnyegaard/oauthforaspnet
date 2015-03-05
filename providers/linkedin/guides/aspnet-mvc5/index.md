@@ -3,107 +3,117 @@ layout: guide
 title:  "Walkthrough: Configuring LinkedIn Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
 
+
 ## Introduction
-A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as LinkedIn.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
-ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  This guide will help you through the process in a step-by-step manner.
+In order to enable OAuth signin with LinkedIn and allow users of your application to sign in with their LinkedIn account, you will need to register an application in LinkedIn. After you have registered the application you can use the **API Key** and **Secret Key** supplied by LinkedIn to register the LinkedIn social login provider in your ASP.NET MVC application.
 
-To follow this guide you will need to have a LinkedIn account.  If you do not have an account then head on over to the [LinkedIn Homepage](http://www.linkedin.com) and register before you continue any further.
+This guide will walk you through the entire process from end-to-end. This guide does not cover any advanced LinkedIn integration topics, but only covers OAuth signin with LinkedIn.
 
-## Registering your application
-In order for you to use LinkedIn as an external authentication provider in your website, you will need to create an application in LinkedIn.  Go the [LinkedIn Developer page](https://developer.linkedin.com) and select "API Keys" from the Support menu at the top of the page.
+## Creating a new ASP.NET MVC application
 
-![](/images/guides/linkedin/linkedin_api_keys_menu.png)
+If you do not yet have an ASP.NET MVC application, you will need to create one. In Visual Studio go to the File menu and select New > Project.
+
+![](/images/guides/linkedin/mvc5/file-new-project.png)
+
+Select the "ASP.NET Web Application" project template. Specify the name and location for your project and click on the OK button.
+
+![](/images/guides/linkedin/mvc5/new-project-dialog.png)
+
+For the template select MVC and make sure that the Authentication setting is set to "Individual User Accounts". Click OK.
+
+![](/images/guides/linkedin/mvc5/aspnet-project-type-dialog.png)
+
+After the project has been created, go to the web application's properties dialog and take note of the "Project Url", as you will need this when specifying the Redirect URL in LinkedIn.
+
+![](/images/guides/linkedin/mvc5/project-properties.png)
+
+## Registering your application in LinkedIn
+
+In order for you to use LinkedIn as an external authentication provider in your website, you will need to create an application in LinkedIn.  Go the [LinkedIn Developer page](https://developer.linkedin.com) and select "My Apps" from the Support menu at the top of the page.
+
+![](/images/guides/linkedin//mvc5/linkedin-my-apps-menu.png)
 
 You will see the list of your existing LinkedIn applications (if any). Click the "Add New Application" link.
 
-![](/images/guides/linkedin/linkedin_application_list.png)
+![](/images/guides/linkedin/mvc5/add-app-link.png)
 
 Complete your company details. If you are already listed as an Administrator for a Company Page in LinkedIn you can simply select it from the dropdown list, or alternatively select "New Company" from the dropdown list to create a new company page.  If you do not have any company pages listed yet you will be prompted for the name of your company.  A new company page will be created for you along with the application.
 
-![](/images/guides/linkedin/linkedin_create_app_companyinfo.png)
+![](/images/guides/linkedin/mvc5/linkedin-create-app-companyinfo.png)
 
 Specify the name, description, website URL and use of your application.  Keep the "Include yourself as developer for this application" option checked.  Select the status of the application. While you are developing the application you can keep the status as "Development".  In this case any updates posted by the application through the LinkedIn API will only be visible to the developers of the application.  To use the application in a production environment set the status to "Live".  
 
 > If you choose to leave the status as "Development" for now you can change it to "Live" at a later stage by editing the application details.
 
-![](/images/guides/linkedin/linkedin_create_app_applicationinfo.png)
+![](/images/guides/linkedin/mvc5/linkedin-create-app-applicationinfo.png)
 
 Add your contact details, or the contact details for whoever else at your company would be the contact person.
 
-![](/images/guides/linkedin/linkedin_create_app_contactinfo.png)
+![](/images/guides/linkedin/mvc5/linkedin-create-app-contactinfo.png)
 
-In the OAuth User agreement section you can leave all the defaults.
+In the OAuth User agreement section you can leave all the defaults, but you will need to specify an OAuth 2.0 Redirect URL. The **OAuth 2.0 Redirect URL** must be the URL for you application, with the `/signin-linkedin` suffix. For you local development environment, this will be something like `http://localhost:4515/signin-linkedin`.
 
-![](/images/guides/linkedin/linkedin_create_app_oauth.png)
+![](/images/guides/linkedin/mvc5/linkedin-create-app-oauth.png)
 
 Finally make sure the the Terms of Service agreement checkbox is selected and click the "Add Application" button.
 
-![](/images/guides/linkedin/linkedin_create_app_other.png)
+![](/images/guides/linkedin/mvc5/linkedin-create-app-other.png)
 
 On the application registration confirmation page, take note of the "API Key" and "Secret Key" fields as these will be needed when enabling LinkedIn authentication in your ASP.NET MVC application.
 
-![](/images/guides/linkedin/linkedin_create_app_confirmation.png)
+![](/images/guides/linkedin/mvc5/linkedin-create-app-confirmation.png)
 
-## Enabling LinkedIn authentication in your ASP.NET MVC Application
-The next step is to add the LinkedIn login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
+Next you need to install the **Owin.Security.Providers** Nuget package which contains the LinkedIn authentication provider.  Right click on your ASP.NET web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
-![](/images/guides/linkedin/new_project.png)
-
-Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts".  Click "OK".
-
-![](/images/guides/linkedin/new_project_mvc.png)
-
-> After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
-
-Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the LinkedIn authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
-
-![](/images/guides/linkedin/nuget_package_dialog.png)
-
-> The **Owin.Security.Providers** Nuget package was developed by myself with contributions from others.  If you want to add extra functionality to any of the providers or add new providers for other services I would appreciate the contributions.  Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
+![](/images/guides/linkedin/mvc5/nuget-package-dialog.png)
 
 Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
-![](/images/guides/linkedin/navigate_startup_auth.png)
+![](/images/guides/linkedin/mvc5/solution-explorer-startup-auth.png)
 
-Add a line at the top of the file to include the namespace for the LinkedIn provider.
+Add a line at the top of the file to include the namespace for the Nuget provider.
 
 {% highlight csharp %}
 using Owin.Security.Providers.LinkedIn;
 {% endhighlight %}
 
-Enable the LinkedIn providers by making a call to the `app.UseLinkedInAuthentication` method passing in the API Key of your LinkedIn application as the `clientId` parameter and the Secret Key as the `clientSecret` parameter.
+Enable the LinkedIn provider by making a call to the `app.UseLinkedInAuthentication` method passing in the App ID of your LinkedIn application as the `clientId` parameter and the Secret Key as the `clientSecret` parameter.
 
 {% highlight csharp %}
 app.UseLinkedInAuthentication(
-	clientId: "75xoplq0com0ln", 
-	clientSecret: "YEazWspiK2GwCWcv");
+    clientId: "755ghpe281q6bo", 
+    clientSecret: "20S5G0D0Lh40IRKW");
 {% endhighlight %}
 
-It is important to ensure that these parameters match the values from LinkedIn exactly, otherwise the LinkedIn authentication for your application will fail.
-
-![](/images/guides/linkedin/keys_matchup.png)
-
-**Update - September 2014 :**
-It was pointed out to me that LinkedIn has updated their service and now require you to specify the correct OAuth 2.0 Redirect URL. The correct redirect URL will be composed of the base URL for your application with the path `/signin-linkedin` appended to it, so in our example you need to edit the application you created in the LinkedIn Developer portal and add the URL `http://localhost:2388/signin-linkedin` in the textbox labeled **OAuth 2.0 Redirect URLs**
+Make sure that the values you pass in for the `clientId` and `clientSecret` parameters are **exactly** the same as the values which were supplied by LinkedIn when registering the application.
 
 ## Testing the application
+
 You have now created an application in LinkedIn and enabled the LinkedIn authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
 
-![](/images/guides/linkedin/application_start_screen.png)
+![](/images/guides/linkedin/mvc5/application-start-screen.png)
 
 Under the "Use another service to log in" section you will see a button which allows you to log in with LinkedIn.  Click the "LinkedIn" button.
 
-![](/images/guides/linkedin/application_login_screen.png)
+![](/images/guides/linkedin/mvc5/application-login-screen.png)
 
-You will be redirected to the LinkedIn website.  LinkedIn will prompt you to enter your email address and password to allow access to your profile overview and email address.  
+You will be redirected to the LinkedIn website.  If you are not logged in to LinkedIn yet you will be prompted to do so.  LinkedIn will then prompt you to give the application permissions to access your personal user data.
 
-![](/images/guides/linkedin/linkedin_permission.png)
+![](/images/guides/linkedin/mvc5/authorize-application.png)
 
-Enter your credentials and click on the "Allow access" button.  You will be redirected back to your application and will need to supply your email address to complete the registration process.
+Click on the "Authorize application" button.  You will be redirected back to your application and will need to supply your email address to complete the registration process.
 
-![](/images/guides/linkedin/complete_registration.png)
+![](/images/guides/linkedin/mvc5/complete-registration.png)
 
 Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your LinkedIn account in the future.
+
+## Launching to Production
+
+When your are ready to launch your application in production your need to go back and edit the application information in LinkedIn, and change the "Live Status" field from "Development" to "Live".
+
+![](/images/guides/linkedin/mvc5/linkedin-live-status.png)
+
+You will also need to add the URL for your production environment to the list of "OAuth 2.0 Redirect URLs". I would however strongly suggest that you create separate applications in LinkedIn for each of your application environments, e.g. Development, Testing, Production etc. Doing it this way allows you to limit the number of people who have knowledge of the API Key and Secret Key of the production environment to a much smaller group.
