@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Facebook;
+using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.Twitter;
 using OAuthDemoMVC5.Models;
 using Owin;
@@ -55,76 +56,14 @@ namespace OAuthDemoMVC5
             // Configure Facebook
             ConfigureFacebook(app);
 
+            // Configure Google
+            ConfigureGoogle(app);
+
             // Configure GitHub
             ConfigureGitHub(app);
 
             // Configure Twitter
             ConfigureTwitter(app);
-
-        }
-
-        private void ConfigureGitHub(IAppBuilder app)
-        {
-            /* -------------------------------------------------------------------------------
-             * Normal configuration
-             * ------------------------------------------------------------------------------- */
-
-            //app.UseGitHubAuthentication("Your client ID", "Your client secret");
-
-            /* -------------------------------------------------------------------------------
-             * Request extra permissions
-             * ------------------------------------------------------------------------------- */
-
-            //var options = new GitHubAuthenticationOptions
-            //{
-            //    ClientId = "Your client ID",
-            //    ClientSecret = "Your client secret",
-            //};
-            //options.Scope.Add("user:email");
-            //app.UseGitHubAuthentication(options);
-
-            /* -------------------------------------------------------------------------------
-             * Specify an alternate callback path. In this case you need to make sure that
-             * the redirect URI you specify when registering the application in GitHub
-             * matches this exactly
-             * ------------------------------------------------------------------------------- */
-
-            //var options = new GitHubAuthenticationOptions
-            //{
-            //    ClientId = "Your client ID",
-            //    ClientSecret = "Your client secret",
-            //    CallbackPath = new PathString("/oauth-redirect/github")
-            //};
-            //app.UseGitHubAuthentication(options);
-
-            /* -------------------------------------------------------------------------------
-             * Retrieve the access token and other user information
-             * ------------------------------------------------------------------------------- */
-
-            var options = new GitHubAuthenticationOptions
-            {
-                ClientId = "Your client ID",
-                ClientSecret = "Your client secret",
-                Provider = new GitHubAuthenticationProvider
-                {
-                    OnAuthenticated = async context =>
-                    {
-                        // Retrieve the OAuth access token to store for subsequent API calls
-                        string accessToken = context.AccessToken;
-
-                        // Retrieve the username
-                        string gitHubUserName = context.UserName;
-
-                        // Retrieve the user's email address
-                        string gitHubEmailAddress = context.Email;
-
-                        // You can even retrieve the full JSON-serialized user
-                        var serializedUser = context.User;
-                    }
-                }
-            };
-            app.UseGitHubAuthentication(options);
-
 
         }
 
@@ -186,6 +125,132 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseFacebookAuthentication(options);
+        }
+
+        private void ConfigureGitHub(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseGitHubAuthentication("Your client ID", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GitHubAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //};
+            //options.Scope.Add("user:email");
+            //app.UseGitHubAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in GitHub
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GitHubAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/github")
+            //};
+            //app.UseGitHubAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GitHubAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new GitHubAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the username
+            //            string gitHubUserName = context.UserName;
+
+            //            // Retrieve the user's email address
+            //            string gitHubEmailAddress = context.Email;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseGitHubAuthentication(options);
+        }
+
+        private void ConfigureGoogle(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseGoogleAuthentication("Your client ID", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GoogleOAuth2AuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //};
+            //options.Scope.Add("https://www.googleapis.com/auth/books");
+            //app.UseGoogleAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in GitHub
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GoogleOAuth2AuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/google")
+            //};
+            //app.UseGoogleAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new GoogleOAuth2AuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new GoogleOAuth2AuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the name of the user in Google
+            //            string googleName = context.Name;
+
+            //            // Retrieve the user's email address
+            //            string googleEmailAddress = context.Email;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseGoogleAuthentication(options);
         }
 
         private void ConfigureTwitter(IAppBuilder app)
