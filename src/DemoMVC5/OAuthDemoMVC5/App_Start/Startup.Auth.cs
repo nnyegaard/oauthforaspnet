@@ -9,6 +9,7 @@ using Microsoft.Owin.Security.Twitter;
 using OAuthDemoMVC5.Models;
 using Owin;
 using Owin.Security.Providers.GitHub;
+using Owin.Security.Providers.LinkedIn;
 
 namespace OAuthDemoMVC5
 {
@@ -61,6 +62,9 @@ namespace OAuthDemoMVC5
 
             // Configure GitHub
             ConfigureGitHub(app);
+
+            // Configure LinkedIn
+            ConfigureLinkedIn(app);
 
             // Configure Twitter
             ConfigureTwitter(app);
@@ -251,6 +255,69 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseGoogleAuthentication(options);
+        }
+
+        private void ConfigureLinkedIn(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseLinkedInAuthentication("Your API Key", "Your secret key");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new LinkedInAuthenticationOptions
+            //{
+            //    ClientId = "Your API Key",
+            //    ClientSecret = "Your secret key",
+            //};
+            //options.Scope.Add("rw_groups");
+            //app.UseLinkedInAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in GitHub
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new LinkedInAuthenticationOptions
+            //{
+            //    ClientId = "Your API Key",
+            //    ClientSecret = "Your secret key",
+            //    CallbackPath = new PathString("/oauth-redirect/linkedin")
+            //};
+            //app.UseLinkedInAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new LinkedInAuthenticationOptions
+            //{
+            //    ClientId = "Your API key",
+            //    ClientSecret = "Your secret key",
+            //    Provider = new LinkedInAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the username
+            //            string linkedInUserName = context.UserName;
+
+            //            // Retrieve the user's email address
+            //            string linkedInEmailAddress = context.Email;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseLinkedInAuthentication(options);
         }
 
         private void ConfigureTwitter(IAppBuilder app)
