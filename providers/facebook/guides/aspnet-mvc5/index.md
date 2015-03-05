@@ -63,7 +63,7 @@ Go back to your ASP.NET application and navigate to the `Startup.Auth` file loca
 
 ![](/images/guides/facebook/mvc5/solution-explorer-startup-auth.png)
 
-In the `ConfigureAuth` method, below all the existing code add the following lines of code:
+In the `ConfigureAuth` method, below all the existing code add the following line of code:
 
 {% highlight csharp %}
 app.UseFacebookAuthentication("1605576099672491", "a3bd8e42104c3ec7d2260b831f3ef51f");
@@ -71,7 +71,10 @@ app.UseFacebookAuthentication("1605576099672491", "a3bd8e42104c3ec7d2260b831f3ef
 
 Make sure that the values you pass in for the `appId` and `appSecret` parameters are **exactly** the same as the values which were supplied by Facebook when registering the application.
 
+> The Facebook OAuth provider is located in the `Microsoft.Owin.Security.Facebook` Nuget package, which is added by default in the new ASP.NET project template. If for some reason this is not added to your project you can do so by installing it using the Nuget dialog or Package Manager Console
+
 ## Testing the application
+
 You have now created an application in Facebook and enabled the Facebook authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
