@@ -10,6 +10,7 @@ using OAuthDemoMVC5.Models;
 using Owin;
 using Owin.Security.Providers.GitHub;
 using Owin.Security.Providers.LinkedIn;
+using Microsoft.Owin.Security.MicrosoftAccount;
 
 namespace OAuthDemoMVC5
 {
@@ -65,6 +66,9 @@ namespace OAuthDemoMVC5
 
             // Configure LinkedIn
             ConfigureLinkedIn(app);
+
+            // Configure Microsoft
+            ConfigureMicrosoft(app);
 
             // Configure Twitter
             ConfigureTwitter(app);
@@ -318,6 +322,70 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseLinkedInAuthentication(options);
+        }
+
+        private void ConfigureMicrosoft(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseMicrosoftAccountAuthentication("Your client ID", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new MicrosoftAccountAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //};
+            //options.Scope.Add("wl.calendars");
+            //app.UseMicrosoftAccountAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in GitHub
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new MicrosoftAccountAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/microsoft")
+            //};
+            //app.UseMicrosoftAccountAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new MicrosoftAccountAuthenticationOptions
+            //{
+            //    ClientId = "Your client ID",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new MicrosoftAccountAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user ID
+            //            string microsoftUserId = context.Id;
+
+            //            // Retrieve the user's full name
+            //            string microsoftFullName = context.Name;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseMicrosoftAccountAuthentication(options);
+
         }
 
         private void ConfigureTwitter(IAppBuilder app)
