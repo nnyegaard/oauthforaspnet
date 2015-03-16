@@ -11,6 +11,8 @@ using Owin;
 using Owin.Security.Providers.GitHub;
 using Owin.Security.Providers.LinkedIn;
 using Microsoft.Owin.Security.MicrosoftAccount;
+using Owin.Security.Providers.OpenID;
+using Owin.Security.Providers.Salesforce;
 
 namespace OAuthDemoMVC5
 {
@@ -70,9 +72,11 @@ namespace OAuthDemoMVC5
             // Configure Microsoft
             ConfigureMicrosoft(app);
 
+            // Configure Salesforce
+            ConfigureSalesforce(app);
+
             // Configure Twitter
             ConfigureTwitter(app);
-
         }
 
         private void ConfigureFacebook(IAppBuilder app)
@@ -346,7 +350,7 @@ namespace OAuthDemoMVC5
 
             /* -------------------------------------------------------------------------------
              * Specify an alternate callback path. In this case you need to make sure that
-             * the redirect URI you specify when registering the application in GitHub
+             * the redirect URI you specify when registering the application in Microsoft
              * matches this exactly
              * ------------------------------------------------------------------------------- */
 
@@ -386,6 +390,87 @@ namespace OAuthDemoMVC5
             //};
             //app.UseMicrosoftAccountAuthentication(options);
 
+        }
+
+        private void ConfigureSalesforce(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------------------
+             * IMPORTANT INFORMATION
+             * 
+             * For the Salesforce provider, you *must* always specify the correct Authorization
+             * and Token endpoints as these are blank by default, and the authentication process
+             * will not work if you do not specify them.
+             * 
+             * These are going to be dependent on which instance you are running. The instance is 
+             * the first segement of your Salesforce URL (i.e. the subdomain) and will be something
+             * line "na12", "ap1", etc.
+             * 
+             * The format for the endpoint are as follows:
+             * 
+             * AuthorizationEndpoint = "https://<instance_name>.salesforce.com/services/oauth2/authorize"
+             * TokenEndpoint = "https://<instance_name>.salesforce.com/services/oauth2/token"
+             * ------------------------------------------------------------------------------------------- */
+
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new SalesforceAuthenticationOptions
+            //{
+            //    ClientId = "Your consumer key",
+            //    ClientSecret = "Your consumer secret",
+            //    Endpoints = new SalesforceAuthenticationOptions.SalesforceAuthenticationEndpoints
+            //    {
+            //        AuthorizationEndpoint = "https://ap1.salesforce.com/services/oauth2/authorize",
+            //        TokenEndpoint = "https://ap1.salesforce.com/services/oauth2/token"
+            //    }
+            //};
+            //app.UseSalesforceAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            // Specifying the scope has no effect. You will need to specify permissions requested
+            // by your application through the Salesforce administration interface when you
+            // register the application
+
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new SalesforceAuthenticationOptions
+            //{
+            //    ClientId = "Your consumer key",
+            //    ClientSecret = "Your consumer secret",
+            //    Endpoints = new SalesforceAuthenticationOptions.SalesforceAuthenticationEndpoints
+            //    {
+            //        AuthorizationEndpoint = "https://ap1.salesforce.com/services/oauth2/authorize",
+            //        TokenEndpoint = "https://ap1.salesforce.com/services/oauth2/token"
+            //    },
+            //    Provider = new SalesforceAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user ID
+            //            string salesforceUserId = context.UserId;
+
+            //            // Retrieve the user's Organization ID
+            //            string salesforceOrganizationId = context.OrganizationId;
+
+            //            // Retrieve the user's full name
+            //            string salesforceFullName = context.DisplayName;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseSalesforceAuthentication(options);
         }
 
         private void ConfigureTwitter(IAppBuilder app)
