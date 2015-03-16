@@ -4,107 +4,122 @@ title:  "Walkthrough: Configuring SalesForce Sign-In for ASP.NET MVC 5 and Visua
 ---
 
 ## Introduction
-A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook and Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
-ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  This guide will help you through the process of allowing users to log in with their SalesForce account in a step-by-step manner.
+In order to enable OAuth signin with Salesforce and allow users of your application to sign in with their Salesforce account, you will need to register an application in Salesforce. After you have registered the application you can use the **Consumer Key** and **Consumer Secret** supplied by Salesforce to register the Salesforce social login provider in your ASP.NET MVC application.
 
-To follow this guide you will need to have a SalesForce Developer account.  If you do not have an account then head on over to the [SalesForce Developer SignUp Page](https://developer.salesforce.com/en/signup) and register before you continue any further.
+This guide will walk you through the entire process from end-to-end. This guide does not cover any advanced Salesforce integration topics, but only covers OAuth signin with Salesforce.
 
-## Creating a new ASP.NET MVC Application
-The first step is to create a new ASP.NET MVC application and enable HTTPS for the application. In Visual Studio, go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
+## Creating a new ASP.NET MVC application
 
-![](/images/guides/salesforce/new_project.png)
+If you do not yet have an ASP.NET MVC application, you will need to create one. In Visual Studio go to the File menu and select New > Project.
 
-Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts".  Click "OK".
+![](/images/guides/salesforce/mvc5/file-new-project.png)
 
-![](/images/guides/salesforce/new_project_mvc.png)
+Select the "ASP.NET Web Application" project template. Specify the name and location for your project and click on the OK button.
 
-> After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
+![](/images/guides/salesforce/mvc5/new-project-dialog.png)
 
-Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the SalesForce authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
+For the template select MVC and make sure that the Authentication setting is set to "Individual User Accounts". Click OK.
 
-![](/images/guides/salesforce/nuget_package_dialog.png)
+![](/images/guides/salesforce/mvc5/aspnet-project-type-dialog.png)
 
-> The **Owin.Security.Providers** Nuget package was developed by myself with contributions from others.  If you want to add extra functionality to any of the providers or add new providers for other services I would appreciate the contributions.  Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
+After the project has been created, go to the web application's properties dialog and take note of the "Project Url", as you will need this when specifying the Callback URL in Salesforce.
 
-The final step before creating a new application in SalesForce is to ensure that we enable HTTPS on our ASP.NET MVC application.  This is important as SalesForce requires the OAuth callback to happen on HTTPS. 
-
-Select your project in the Solution Explorer and press F4 to view the Properties. Ensure that `SSL Enabled` is set to `True` and take note of the SSL URL as you will need that when registering your application in SalesForce.
-
-![](/images/guides/salesforce/properties-ssl.png) 
+![](/images/guides/salesforce/mvc5/project-properties.png)
 
 ## Registering an application in SalesForce
+
 In order for your application to use SalesForce as a login mechanism you will need to create an application in SalesForce.  To do this, log in to SalesForce and go to the Setup area.
+
+![](/images/guides/salesforce/mvc5/salesforce-select-setup-menu.png)
 
 In the navigation pane on the left hand side, navigate to Build > Create and click on the Apps link.  
 
-![](/images/guides/salesforce/sf-create-app-menu.png)
+![](/images/guides/salesforce/mvc5/salesforce-create-apps-menu.png)
 
 Scroll down to the Connected Apps section and click on the New button.
 
-![](/images/guides/salesforce/sf-connected-apps.png)
+![](/images/guides/salesforce/mvc5/salesforce-connected-apps.png)
 
 Supply the Connected App Name, API Name and Contact Email.
 
-![](/images/guides/salesforce/new-app-1.png)
+![](/images/guides/salesforce/mvc5/salesforce-new-app-1.png)
 
-Select "Enable OAuth Settings" and enter the Callback URL for your application and select at least one of the available scopes. The Callback URL should consist of the secure URL for your website, with the address `/signin-salesforce`, e.g. `https://localhost:44300/signin-salesforce`.  
+Select "Enable OAuth Settings" and enter the Callback URL for your application and select the "Access your Basic Information" scope. The Callback URL should consist of the URL for your website, with the suffix `/signin-salesforce`, e.g. `http://localhost:4515/signin-salesforce`.  
 
-Please note that the Callback URL **must** be HTTPS.
+![](/images/guides/salesforce/mvc5/salesforce-new-app-2.png)
 
-![](/images/guides/salesforce/new-app-2.png)
+Finally scroll down and click on the Save button. You will get a notification stating that the changes will take a few minutes to take effect. Click the Continue button.
 
-Finally scroll down and click on the Save button.
+![](/images/guides/salesforce/mvc5/salesforce-new-app-3.png)
 
-![](/images/guides/salesforce/new-app-3.png)
+A screen will be displayed with the details your need when enabling the SalesForce authentication in ASP.NET MVC. Take note of the "Consumer Key" and "Consumer Secret" fields.
 
-After the application has been created a screen will be displayed with the details your need when enabling the SalesForce authentication in ASP.NET MVC. Take note of the "Consumer Key" and "Consumer Secret" fields.
+![](/images/guides/salesforce/mvc5/salesforce-new-app-success.png)
 
-![](/images/guides/salesforce/new-app-success.png)
+## Enabling Salesforce authentication in your ASP.NET MVC Application
 
-## Enabling SalesForce authentication in your ASP.NET MVC Application
-Returning to Visual Studio, navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
+Next you need to install the **Owin.Security.Providers** Nuget package which contains the Salesforce authentication provider.  Right click on your ASP.NET web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
-![](/images/guides/salesforce/navigate_startup_auth.png)
+![](/images/guides/salesforce/mvc5/nuget-package-dialog.png)
+
+Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
+
+![](/images/guides/salesforce/mvc5/solution-explorer-startup-auth.png)
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
 {% highlight csharp %}
-using Owin.Security.Providers.SalesForce;
+using Owin.Security.Providers.Salesforce;
 {% endhighlight %}
 
-Enable the SalesForce provider by making a call to the `app.UseSalesforceAuthentication` method passing in the Consumer Key of your SalesForce application as the `clientId` parameter and the Consumer Secret as the `clientSecret` parameter.
+For most OAuth providers you do not have to worry about setting the authentication endpoints, but for Salesforce the endpoints are going to be dependent on the Salesforce *instance* your are running on. To get the instance name, simply look at the subdomain of your salesforce URL:
+
+![](/images/guides/salesforce/mvc5/salesforce-instance.png)
+
+In my case the instance name is `ap1`, meaning that I am running on one of the servers in the Asia Pacific region. When registering the Salesforce authentication provider, your `AuthorizationEndpoint` and `TokenEndpoint` are going to be in the following format:
 
 {% highlight csharp %}
-app.UseSalesforceAuthentication(
-    clientId: "3MVG9Y6d_Btp4xp53rplRBM7p1TZype2R5VtcbI0TWlliEmJ1qf6_Hl6UIvCJhSZ0CBmFCqcZWu.oPVRnGuTo", 
-    clientSecret: "3446854973015261364");
+AuthorizationEndpoint = "https://<instance_name>.salesforce.com/services/oauth2/authorize"
+TokenEndpoint = "https://<instance_name>.salesforce.com/services/oauth2/token"
 {% endhighlight %}
 
-It is important to ensure that these parameters match the values from SalesForce exactly, otherwise the authentication for your application will fail.
+So to register the Salesforce provider you have to construct an instance of the `SalesforceAuthenticationOptions` class, specifiying the Consumer Key of your Salesforce application as the `ClientId` property and the Consumer Secret as the `ClientSecret` property. You will also need to set the `Endpoints` property to the correct endpoint URLs as described above.
 
-![](/images/guides/salesforce/keys-matchup.png)
+Finally, make a call to the `app.SalesforceAuthenticationOptions` method passing in the newly constucted instance of the `SalesforceAuthenticationOptions` class:
+
+{% highlight csharp %}
+var options = new SalesforceAuthenticationOptions
+{
+    ClientId = "3MVG9Y6d_Btp4xp53rplRBM7p1bBinIiO99QrKFzN9aYd7HO3MchvSUhNrF0jeCayyiXTNMddk.azWta9oWRD",
+    ClientSecret = "2319362822370818262",
+    Endpoints = new SalesforceAuthenticationOptions.SalesforceAuthenticationEndpoints
+    {
+        AuthorizationEndpoint = "https://ap1.salesforce.com/services/oauth2/authorize",
+        TokenEndpoint = "https://ap1.salesforce.com/services/oauth2/token"
+    }
+};
+app.UseSalesforceAuthentication(options);
+{% endhighlight %}
 
 ## Testing the application
-You have now created an application in SalesForce and enabled the SalesForce authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
-Be sure to navigate to the **secure** (i.e. HTTPS) address for your website. In this example it is `https://localhost:44300`
+You have now created an application in Salesforce and enabled the Salesforce authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
 
-![](/images/guides/salesforce/application_start_screen.png)
+![](/images/guides/salesforce/mvc5/application-start-screen.png)
 
-Under the "Use another service to log in" section you will see a button which allows you to log in with SalesForce.  Click the "SalesForce" button.
+Under the "Use another service to log in" section you will see a button which allows you to log in with Salesforce.  Click the "Salesforce" button.
 
-![](/images/guides/salesforce/application_login_screen.png)
+![](/images/guides/salesforce/mvc5/application-login-screen.png)
 
-You will be redirected to the SalesForce website.  If you are not logged in to SalesForce yet you will be prompted to do so.  SalesForce will then prompt you to give the application permission to access your information.
+You will be redirected to the Salesforce website.  If you are not logged in to Salesforce yet you will be prompted to do so.  Salesforce will then prompt you to give the application permissions to access your personal basic information.
 
-![](/images/guides/salesforce/salesforce_auth_screen.png)
+![](/images/guides/salesforce/mvc5/salesforce-permissions-window.png)
 
-Click on the "Allow" button. You will be redirected back to your application and will need to supply your username to complete the registration process.
+Click on the "Allow" button.  You will be redirected back to your application and will need to supply your email address to complete the registration process.
 
-![](/images/guides/salesforce/complete_registration.png)
+![](/images/guides/salesforce/mvc5/complete-registration.png)
 
-Once you have filled in your username and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your SalesForce account in the future.
-
+Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your Salesforce account in the future.

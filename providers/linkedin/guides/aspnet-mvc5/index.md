@@ -64,6 +64,8 @@ On the application registration confirmation page, take note of the "API Key" an
 
 ![](/images/guides/linkedin/mvc5/linkedin-create-app-confirmation.png)
 
+## Enabling LinkedIn authentication in your ASP.NET MVC Application
+
 Next you need to install the **Owin.Security.Providers** Nuget package which contains the LinkedIn authentication provider.  Right click on your ASP.NET web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
 ![](/images/guides/linkedin/mvc5/nuget-package-dialog.png)
