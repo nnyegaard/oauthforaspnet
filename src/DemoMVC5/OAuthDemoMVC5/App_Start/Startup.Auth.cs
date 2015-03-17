@@ -13,6 +13,7 @@ using Owin.Security.Providers.LinkedIn;
 using Microsoft.Owin.Security.MicrosoftAccount;
 using Owin.Security.Providers.OpenID;
 using Owin.Security.Providers.Salesforce;
+using Owin.Security.Providers.StackExchange;
 
 namespace OAuthDemoMVC5
 {
@@ -74,6 +75,9 @@ namespace OAuthDemoMVC5
 
             // Configure Salesforce
             ConfigureSalesforce(app);
+
+            // Configure Stack Exchange
+            ConfigureStackExchange(app);
 
             // Configure Twitter
             ConfigureTwitter(app);
@@ -471,6 +475,73 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseSalesforceAuthentication(options);
+        }
+
+        private void ConfigureStackExchange(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseStackExchangeAuthentication("Your client id", "Your client secret", "Your key");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new StackExchangeAuthenticationOptions
+            //{
+            //    ClientId = "Your client Id",
+            //    ClientSecret = "Your client secret",
+            //    Key = "Your client key"
+            //};
+            //options.Scope.Add("read_inbox");
+            //app.UseStackExchangeAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. 
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new StackExchangeAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Key = "Your key",
+            //    CallbackPath = new PathString("/oauth-redirect/stackexchange")
+            //};
+            //app.UseStackExchangeAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new StackExchangeAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Key = "Your key",
+            //    Provider = new StackExchangeAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user ID
+            //            string stackExchangeUserId = context.Id;
+
+            //            // Retrieve the user name
+            //            string stackExchangeUserName = context.UserName;
+
+            //            // Retrieve the user's profile image URL
+            //            string stackExchangeProfileImage = context.ProfileImage;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseStackExchangeAuthentication(options);
         }
 
         private void ConfigureTwitter(IAppBuilder app)
