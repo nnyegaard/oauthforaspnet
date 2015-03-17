@@ -3,7 +3,6 @@ layout: guide
 title:  "Walkthrough: Configuring LinkedIn Sign-In for ASP.NET MVC 5 and Visual Studio 2013"
 ---
 
-
 ## Introduction
 
 In order to enable OAuth signin with LinkedIn and allow users of your application to sign in with their LinkedIn account, you will need to register an application in LinkedIn. After you have registered the application you can use the **API Key** and **Secret Key** supplied by LinkedIn to register the LinkedIn social login provider in your ASP.NET MVC application.
