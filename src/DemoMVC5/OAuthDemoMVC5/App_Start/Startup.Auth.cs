@@ -550,7 +550,7 @@ namespace OAuthDemoMVC5
              * Normal configuration
              * ------------------------------------------------------------------------------- */
 
-            //app.UseTwitterAuthentication("Your Consumer Key", "Your Consumer Secret");
+            //app.UseTwitterAuthentication("Your consumer key", "Your consumer secret");
 
             /* -------------------------------------------------------------------------------
              * Specify an alternate callback path
@@ -558,8 +558,8 @@ namespace OAuthDemoMVC5
 
             //var options = new TwitterAuthenticationOptions
             //{
-            //    ConsumerKey = "Your Consumer Key", 
-            //    ConsumerSecret = "Your Consumer Secret",
+            //    ConsumerKey = "Your consumer key",
+            //    ConsumerSecret = "Your consumer secret",
             //    CallbackPath = new PathString("/oauth-redirect/twitter")
             //};
             //app.UseTwitterAuthentication(options);
