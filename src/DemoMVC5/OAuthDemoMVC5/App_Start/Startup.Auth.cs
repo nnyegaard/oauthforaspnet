@@ -14,6 +14,7 @@ using Microsoft.Owin.Security.MicrosoftAccount;
 using Owin.Security.Providers.OpenID;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
+using Owin.Security.Providers.Yahoo;
 
 namespace OAuthDemoMVC5
 {
@@ -81,6 +82,9 @@ namespace OAuthDemoMVC5
 
             // Configure Twitter
             ConfigureTwitter(app);
+
+            // Configure Yahoo
+            ConfigureYahoo(app);
         }
 
         private void ConfigureFacebook(IAppBuilder app)
@@ -589,6 +593,53 @@ namespace OAuthDemoMVC5
             //};
             //app.UseTwitterAuthentication(options);
 
+        }
+
+        private void ConfigureYahoo(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+            * Normal configuration
+            * ------------------------------------------------------------------------------- */
+
+            //app.UseYahooAuthentication("Your client ID", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path.
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new YahooAuthenticationOptions
+            //{
+            //    ConsumerKey = "Your client ID",
+            //    ConsumerSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/yahoo")
+            //};
+            //app.UseYahooAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new YahooAuthenticationOptions
+            //{
+            //    ConsumerKey = "Your client ID",
+            //    ConsumerSecret = "Your client secret",
+            //    Provider = new YahooAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+            //            string accessTokenSecret = context.AccessTokenSecret;
+
+            //            // Retrieve the user ID
+            //            string yahooUserName = context.UserId;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseYahooAuthentication(options);
         }
     }
 }
