@@ -112,5 +112,4 @@ var options = new SalesforceAuthenticationOptions
     }
 };
 app.UseSalesforceAuthentication(options);
-}
 {% endhighlight %}
