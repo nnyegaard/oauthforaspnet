@@ -4,99 +4,103 @@ title:  "Walkthrough: Configuring Yahoo Sign-In for ASP.NET MVC 5 and Visual Stu
 ---
 
 ## Introduction
-A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook, Twitter or Yahoo.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
-ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to register your application with Yahoo and enable this in your website.  
+In order to enable OAuth signin with Yahoo and allow users of your application to sign in with their Yahoo account, you will need to register an application in Yahoo. After you have registered the application you can use the **API Key** and **Secret Key** supplied by Yahoo to register the Yahoo social login provider in your ASP.NET MVC application.
 
-ASP.NET MVC 5 does not support signing in with Yahoo as part of the standard external authentication services, but support for Yahoo authentication is available through an open source NuGet package. This guide will help you through the process of enabling Yahoo signin in your application in a step-by-step manner.
+This guide will walk you through the entire process from end-to-end. This guide does not cover any advanced Yahoo integration topics, but only covers OAuth signin with Yahoo.
 
-To follow this guide you will need to have a Yahoo account.  If you do not have an account then head on over to the [Yahoo Homepage](https://www.yahoo.com/) and register before you continue any further.
+## Creating a new ASP.NET MVC application
+
+If you do not yet have an ASP.NET MVC application, you will need to create one. In Visual Studio go to the File menu and select New > Project.
+
+![](/images/guides/yahoo/mvc5/file-new-project.png)
+
+Select the "ASP.NET Web Application" project template. Specify the name and location for your project and click on the OK button.
+
+![](/images/guides/yahoo/mvc5/new-project-dialog.png)
+
+For the template select MVC and make sure that the Authentication setting is set to "Individual User Accounts". Click OK.
+
+![](/images/guides/yahoo/mvc5/aspnet-project-type-dialog.png)
 
 ## Registering an application on Yahoo
-In order for you to use Yahoo as an external authentication provider in your website, you will need to register a project on the Yahoo Developer Network.  Go to the [Yahoo Developer Network website](https://developer.yahoo.com/) and the "My Projects" menu from the account menu at the top right of the page.
 
-![](/images/guides/yahoo/yahoo_projects_menu.png)
+To register an application, go to the [Yahoo Developer Network website](https://developer.yahoo.com/) and under the "My Apps" menu at the top right of the page select the YDN Apps option.
 
-You will see a list of any existing projects you may have created before.  Click on the "Create a Project" button.
+![](/images/guides/yahoo/mvc5/yahoo-apps-menu.png)
 
-![](/images/guides/yahoo/yahoo_projects_list.png)
+You will see a list of any existing applications you may have created before.  Click on the "Create an App" button.
 
-Enter the name and description of your application and specify the application type as "Web-based". 
+![](/images/guides/yahoo/mvc5/yahoo-projects-list.png)
 
-![](/images/guides/yahoo/yahoo_project_1.png)
+To register a web app in Yahoo you will need to specify a callback domain, but unfortunately you cannot specify `localhost` as the callback domain. Yahoo also validates that the domain is correct, so even if you register a domain other that `localhost`, when you test the application locally, the ASP.NET Identity runtime will specify the callback URL as being on the `localhost` domain, and Yahoo will not allow this. 
 
-Under "Access Scopes" make sure that you have selected "This app requires access to private user data". Specify you website domain in the Callback Domain field. You also need to ensure that **at least one** of the APIs are selected under "Select APIs for private user data access".  In this case we selected "Contacts".
+This means that you will run into some issues when wanting to register and test an application locally on you computer. There are 2 ways around this.
 
-![](/images/guides/yahoo/yahoo_project_2.png)
+The first is to use a tool like [Ngrok](https://ngrok.com/) to tunnel traffic from a "proper" domain which is valid according to Yahoo, to your `localhost`. This requires reconfiguring IIS Express to recognize that domain, and also reconfiguring your project to use that new URL. There is a blog post on the Twilio website entitled [Configure Windows for Local Webhook Testing Using ngrok](https://www.twilio.com/blog/2014/03/configure-windows-for-local-webhook-testing-using-ngrok.html) which describes how to do it
 
-> **Please note:** The Callback domain for Yahoo cannot point to localhost or a URL containing a port number, which will typically be the case when you are in development mode using IIS Express. To work around this problem you will need a tunneling service like [ngrok](https://ngrok.com/) and specify the `Callback Domain` as http://ngrok.com. 
-> 
-> Here is a very good blog post on the Twilio website which explains how to configure ngrok to work with IIS or IIS Express: [Configure Windows for Local Webhook Testing Using ngrok](https://www.twilio.com/blog/2014/03/configure-windows-for-local-webhook-testing-using-ngrok.html)
+The second (and easier) way is that when registering the application in Yahoo, you specify the application type as "Installed Application" instead of "Web Application". If you do this you do not need to have a callback domain for an installed application.
 
-Finally make sure that you accept the terms of use and click the "Create Project" button.
+For the sake of simplicity I will use the second approach as it works just fine, and is much simpler. I will only suggest using this for local development. For your production website you need to register the application as a "Web Application" and specify a correct callback domain.
 
-![](/images/guides/yahoo/yahoo_project_3.png)
+So specify a name for the application and select "Installed Application". Leave the rest of the fields blank.
+
+![](/images/guides/yahoo/mvc5/yahoo-create-app-1.png)
+
+> Just to reiterate: For your production application you will need to select "Web Application" and specify a valid callback domain.
+
+Under API Permissions you will need to select at least one of the API permission for the authentication to work properly. I just selected Contacts. Click the Create App button.
+
+![](/images/guides/yahoo/mvc5/yahoo-create-app-2.png)
 
 After the application has been created you need to take note of the Consumer Key and Consumer Secret as these will be needed when you enable authentication via Yahoo in your ASP.NET MVC application.
 
-![](/images/guides/yahoo/yahoo_key_and_secret.png)
+![](/images/guides/yahoo/mvc5/yahoo-client-id-and-secret.png)
 
 ## Enabling Yahoo authentication in your ASP.NET MVC Application
-The next step is to add the Yahoo login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
-![](/images/guides/yahoo/new_project.png)
+Next you need to install the **Owin.Security.Providers** Nuget package which contains the Yahoo authentication provider.  Right click on your ASP.NET web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
-Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts".  Click "OK".
-
-![](/images/guides/yahoo/new_project_mvc.png)
-
-> After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
-
-Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the Yahoo authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
-
-![](/images/guides/yahoo/nuget_package_dialog.png)
-
-> The **Owin.Security.Providers** Nuget package was developed by myself with contributions from others.  If you want to add extra functionality to any of the providers or add new providers for other services I would appreciate the contributions.  Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
+![](/images/guides/yahoo/mvc5/nuget-package-dialog.png)
 
 Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
-![](/images/guides/yahoo/navigate_startup_auth.png)
+![](/images/guides/yahoo/mvc5/solution-explorer-startup-auth.png)
 
-Add a line at the top of the file to include the namespace for the Yahoo provider.
+Add a line at the top of the file to include the namespace for the Nuget provider.
 
 {% highlight csharp %}
 using Owin.Security.Providers.Yahoo;
 {% endhighlight %}
 
-Enable the Yahoo provider by making a call to the `app.UseGitYahooAuthentication` method passing in the Consumer Key of your Yahoo application as the `consumerKey` parameter and the Consumer Secret as the `consumerSecret` parameter.
+Enable the Yahoo provider by making a call to the `app.UseYahooAuthentication` method passing in the Consumer Key of your Yahoo application as the `consumerKey` parameter and the Consumer Secret as the `consumerSecret` parameter.
 
 {% highlight csharp %}
 app.UseYahooAuthentication(
-    consumerKey: "dj0yJmk9c1BpNXc0eHRvMUF3JmQ9WVdrOVMzQm5RV0poTjJrbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1kYQ--",
-    consumerSecret: "0cebda50c13f2f4d13d3eac36e5d9593bfaf6f71");
+	"dj0yJmk9Sk11TWNjNDVXcHltJmQ9WVdrOU5FSklZakJoTkRJbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1mZg--",
+	"47af0a79e80c98d03eda5270c4099c5b883b3459");
 {% endhighlight %}
 
-It is important to ensure that these parameters match the values from Yahoo exactly, otherwise the Yahoo authentication for your application will fail.
-
-![](/images/guides/yahoo/keys_matchup.png)
+Make sure that the values you pass in for the `consumerKey` and `consumerSecret` parameters are **exactly** the same as the values which were supplied by Yahoo when registering the application.
 
 ## Testing the application
-You have now created a project in Yahoo and enabled the Yahoo authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
+
+You have now created an application in Yahoo and enabled the Yahoo authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
 
-![](/images/guides/yahoo/application_start_screen.png)
+![](/images/guides/yahoo/mvc5/application-start-screen.png)
 
 Under the "Use another service to log in" section you will see a button which allows you to log in with Yahoo.  Click the "Yahoo" button.
 
-![](/images/guides/yahoo/application_login_screen.png)
+![](/images/guides/yahoo/mvc5/application-login-screen.png)
 
-You will be redirected to the Yahoo website.  If you are not logged in to Yahoo yet you will be prompted to do so.  Yahoo will then prompt you to give the application permissions to access your Yahoo Contacts.
+You will be redirected to the Yahoo website.  If you are not logged in to Yahoo yet you will be prompted to do so.  Yahoo will then prompt you to give the application permissions to access your personal user data.
 
-![](/images/guides/yahoo/yahoo_permission.png)
+![](/images/guides/yahoo/mvc5/authorize-application.png)
 
 Click on the "Agree" button.  You will be redirected back to your application and will need to supply your email address to complete the registration process.
 
-![](/images/guides/yahoo/complete_registration.png)
+![](/images/guides/yahoo/mvc5/complete-registration.png)
 
 Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your Yahoo account in the future.
