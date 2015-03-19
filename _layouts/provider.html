@@ -1,27 +1,32 @@
 ---
 layout: default
 ---
+
 <div class="container">
-	<header class="provider-title">
-		<h1>{{ page.title }}</h1>
-	</header>
-	<div class="row">
-		<div class="col l8 provider-guide">
-			{{ content }}
-		</div>
-		<div class="col offset-l1 l3">
-			<h5 class="provider-sidebar-header first">Links</h5>
-			<ul class="provider-sidebar-list"> 
-				{% for link in page.links %}
-				<li><a target="_blank" href="{{ link.url }}">{{ link.name }}</a></li>
-				{% endfor %}
-			</ul>
-			<h5 class="provider-sidebar-header">3rd Party SDKs</h5>
-			<ul class="provider-sidebar-list"> 
-				{% for sdk in page.sdks %}
-				<li><a target="_blank" href="{{ sdk.url }}">{{ sdk.name }}</a></li>
-				{% endfor %}
-			</ul>
-		</div>
+  <div class="row">
+	<div class="col-md-8">
+		{{ content }}
 	</div>
+	<div class="col-md-3 col-md-offset-1">
+		<div class="panel panel-primary">
+		  <div class="panel-heading">Links</div>
+		  <ul class="list-group">
+		  {% for link in page.links %}
+		  <li class="list-group-item"><a target="_blank" href="{{ link.url }}">{{ link.name }}</a></li>
+			{% endfor %}
+		  </ul>
+		</div>
+
+		<div class="panel panel-primary">
+		  <div class="panel-heading">3rd Party SDKs</div>
+		  <ul class="list-group">
+		  {% for sdk in page.sdks %}
+		  <li class="list-group-item"><a target="_blank" href="{{ link.url }}">{{ sdk.name }}</a></li>
+			{% endfor %}
+		  </ul>
+		</div>
+
+
+	</div>
+  </div>
 </div>
