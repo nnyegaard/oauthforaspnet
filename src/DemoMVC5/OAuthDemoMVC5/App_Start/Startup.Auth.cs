@@ -13,6 +13,7 @@ using Owin.Security.Providers.LinkedIn;
 using Microsoft.Owin.Security.MicrosoftAccount;
 using Owin.Security.Providers.ArcGISOnline;
 using Owin.Security.Providers.Asana;
+using Owin.Security.Providers.BattleNet;
 using Owin.Security.Providers.OpenID;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
@@ -66,6 +67,9 @@ namespace OAuthDemoMVC5
 
             // Configure Asana
             ConfigureAsana(app);
+
+            // Configure Battle.NET
+            ConfigureBattleNet(app);
 
             // Configure Facebook
             ConfigureFacebook(app);
@@ -202,6 +206,21 @@ namespace OAuthDemoMVC5
             //};
             //app.UseAsanaAuthentication(options);
 
+        }
+
+        private void ConfigureBattleNet(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new BattleNetAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Region = Region.US
+            //};
+            //app.UseBattleNetAuthentication(options);
         }
 
         private void ConfigureFacebook(IAppBuilder app)
