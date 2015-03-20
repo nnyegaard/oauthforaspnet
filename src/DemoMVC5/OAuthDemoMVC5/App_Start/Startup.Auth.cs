@@ -11,6 +11,7 @@ using Owin;
 using Owin.Security.Providers.GitHub;
 using Owin.Security.Providers.LinkedIn;
 using Microsoft.Owin.Security.MicrosoftAccount;
+using Owin.Security.Providers.ArcGISOnline;
 using Owin.Security.Providers.OpenID;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
@@ -58,6 +59,9 @@ namespace OAuthDemoMVC5
             /*---------------------------------------------------------------------------------
              * Configuration of the various providers
              *--------------------------------------------------------------------------------- */
+            
+            // Configure ArcGIS
+            ConfigureArcGIS(app);
 
             // Configure Facebook
             ConfigureFacebook(app);
@@ -85,6 +89,63 @@ namespace OAuthDemoMVC5
 
             // Configure Yahoo
             ConfigureYahoo(app);
+        }
+
+        private void ConfigureArcGIS(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseArcGISOnlineAuthentication("Your client id", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            // ArcGIS has no concept of scopes. To see which information is available, please
+            // refer to this document:
+            //
+            // https://developers.arcgis.com/authentication/limitations-of-application-authentication/
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify under the Security tab of the application matches
+             * this redirect URI
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new ArcGISOnlineAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/arcgis")
+            //};
+            //app.UseArcGISOnlineAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new ArcGISOnlineAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new ArcGISOnlineAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's full name
+            //            string userFullName = context.Name;
+
+            //            // Retrieve the user's email address
+            //            string userEmail = context.Email;
+            //        }
+            //    }
+            //};
+            //app.UseArcGISOnlineAuthentication(options);
         }
 
         private void ConfigureFacebook(IAppBuilder app)
