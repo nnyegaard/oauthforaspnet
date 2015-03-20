@@ -12,6 +12,7 @@ using Owin.Security.Providers.GitHub;
 using Owin.Security.Providers.LinkedIn;
 using Microsoft.Owin.Security.MicrosoftAccount;
 using Owin.Security.Providers.ArcGISOnline;
+using Owin.Security.Providers.Asana;
 using Owin.Security.Providers.OpenID;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
@@ -62,6 +63,9 @@ namespace OAuthDemoMVC5
             
             // Configure ArcGIS
             ConfigureArcGIS(app);
+
+            // Configure Asana
+            ConfigureAsana(app);
 
             // Configure Facebook
             ConfigureFacebook(app);
@@ -146,6 +150,58 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseArcGISOnlineAuthentication(options);
+        }
+
+        private void ConfigureAsana(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseAsanaAuthentication("29716382695573", "7dbf09448b582f06a0760b192e528b6c");
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in Facebook
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new AsanaAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/asana")
+            //};
+            //app.UseAsanaAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new AsanaAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new AsanaAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's full name
+            //            string userFullName = context.Name;
+
+            //            // Retrieve the user's email address
+            //            string userEmail = context.Email;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseAsanaAuthentication(options);
+
         }
 
         private void ConfigureFacebook(IAppBuilder app)
