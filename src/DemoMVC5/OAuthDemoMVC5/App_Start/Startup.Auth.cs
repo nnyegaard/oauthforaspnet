@@ -15,6 +15,7 @@ using Owin.Security.Providers.ArcGISOnline;
 using Owin.Security.Providers.Asana;
 using Owin.Security.Providers.BattleNet;
 using Owin.Security.Providers.Buffer;
+using Owin.Security.Providers.Dropbox;
 using Owin.Security.Providers.OpenID;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
@@ -74,6 +75,9 @@ namespace OAuthDemoMVC5
 
             // Configure Buffer
             ConfigureBuffer(app);
+
+            // Configure Dropbox
+            ConfigureDropbox(app);
 
             // Configure Facebook
             ConfigureFacebook(app);
@@ -273,6 +277,55 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseBufferAuthentication(options);
+
+        }
+
+        private void ConfigureDropbox(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseDropboxAuthentication("Your app key", "Your app secret");
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in Dropbox
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new DropboxAuthenticationOptions
+            //{
+            //    AppKey = "Your app key",
+            //    AppSecret = "Your app secret",
+            //    CallbackPath = new PathString("/oauth-redirect/dropbox")
+            //};
+            //app.UseDropboxAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new DropboxAuthenticationOptions
+            //{
+            //    AppKey = "Your app key",
+            //    AppSecret = "Your app secret",
+            //    Provider = new DropboxAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's full name
+            //            string userFullName = context.Name;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseDropboxAuthentication(options);
 
         }
 
