@@ -13,7 +13,7 @@ links:
 
 ## 1. Register an application in Instagram
 
-In the Instagram developer portal, [go to "Managae Clients" page](https://instagram.com/developer/clients/manage/) and click on the "Register a New Client" button. For the "OAuth redirect_uri" field you will need the specify the URL for your application with the `/signin-instagram` suffix, e.g. `http://localhost:4515/signin-instagram`. Complete the client registration information and when you are finished take note of the **Client ID** and **Client Secret** fields as you will need these when registering the Instagram OAuth provider in your ASP.NET application.
+In the Instagram developer portal, [go to "Manage Clients" page](https://instagram.com/developer/clients/manage/) and click on the "Register a New Client" button. For the "OAuth redirect_uri" field you will need the specify the URL for your application with the `/signin-instagram` suffix, e.g. `http://localhost:4515/signin-instagram`. Complete the client registration information and when you are finished take note of the **Client ID** and **Client Secret** fields as you will need these when registering the Instagram OAuth provider in your ASP.NET application.
 
 ![](/images/instagram-client-id-and-secret.png)
 
