@@ -19,6 +19,8 @@ using Owin.Security.Providers.Dropbox;
 using Owin.Security.Providers.Instagram;
 using Owin.Security.Providers.Instagram.Provider;
 using Owin.Security.Providers.OpenID;
+using Owin.Security.Providers.Reddit;
+using Owin.Security.Providers.Reddit.Provider;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
 using Owin.Security.Providers.Yahoo;
@@ -101,6 +103,9 @@ namespace OAuthDemoMVC5
 
             // Configure Microsoft
             ConfigureMicrosoft(app);
+
+            // Configure Reddit
+            ConfigureReddit(app);
 
             // Configure Salesforce
             ConfigureSalesforce(app);
@@ -722,6 +727,70 @@ namespace OAuthDemoMVC5
             //};
             //app.UseMicrosoftAccountAuthentication(options);
 
+        }
+
+        private void ConfigureReddit(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseRedditAuthentication("Your client id", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new RedditAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret"
+            //};
+            //options.Scope.Clear();
+            //options.Scope.Add("identity");
+            //app.UseRedditAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in Microsoft
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new RedditAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/reddit")
+            //};
+            //app.UseRedditAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new RedditAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new RedditAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's Reddit ID
+            //            string userId = context.Id;
+
+            //            // Retrieve the user's Reddit username
+            //            string userName = context.UserName;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseRedditAuthentication(options);
         }
 
         private void ConfigureSalesforce(IAppBuilder app)
