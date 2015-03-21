@@ -16,6 +16,8 @@ using Owin.Security.Providers.Asana;
 using Owin.Security.Providers.BattleNet;
 using Owin.Security.Providers.Buffer;
 using Owin.Security.Providers.Dropbox;
+using Owin.Security.Providers.Instagram;
+using Owin.Security.Providers.Instagram.Provider;
 using Owin.Security.Providers.OpenID;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
@@ -82,11 +84,17 @@ namespace OAuthDemoMVC5
             // Configure Facebook
             ConfigureFacebook(app);
 
+            // Configure Foursquare
+            ConfigureFoursquare(app);
+
             // Configure Google
             ConfigureGoogle(app);
 
             // Configure GitHub
             ConfigureGitHub(app);
+
+            // Configure Instagram
+            ConfigureInstagram(app);
 
             // Configure LinkedIn
             ConfigureLinkedIn(app);
@@ -389,6 +397,16 @@ namespace OAuthDemoMVC5
             //app.UseFacebookAuthentication(options);
         }
 
+        private void ConfigureFoursquare(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseFoursquareAuthentication("Your App ID", "Your App Secret");
+
+        }
+
         private void ConfigureGitHub(IAppBuilder app)
         {
             /* -------------------------------------------------------------------------------
@@ -513,6 +531,70 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseGoogleAuthentication(options);
+        }
+
+        public void ConfigureInstagram(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseInstagramInAuthentication("Your client id", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new InstagramAuthenticationOptions()
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret"
+            //};
+            //options.Scope.Add("likes");
+            //app.UseInstagramInAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in Instagram
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new InstagramAuthenticationOptions()
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/instagram")
+            //};
+            //app.UseInstagramInAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new InstagramAuthenticationOptions()
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new InstagramAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the username
+            //            string userName = context.UserName;
+
+            //            // Retrieve the user's full name
+            //            string fullName = context.Name;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseInstagramInAuthentication(options);
+
         }
 
         private void ConfigureLinkedIn(IAppBuilder app)
