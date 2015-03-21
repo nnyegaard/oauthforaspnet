@@ -25,6 +25,7 @@ using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
 using Owin.Security.Providers.TripIt;
 using Owin.Security.Providers.TripIt.Provider;
+using Owin.Security.Providers.Twitch;
 using Owin.Security.Providers.Yahoo;
 
 namespace OAuthDemoMVC5
@@ -120,6 +121,9 @@ namespace OAuthDemoMVC5
 
             // Configure Twitter
             ConfigureTwitter(app);
+
+            // Configure Twitch
+            ConfigureTwitch(app);
 
             // Configure Yahoo
             ConfigureYahoo(app);
@@ -994,6 +998,68 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseStackExchangeAuthentication(options);
+        }
+
+        private void ConfigureTwitch(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseTwitchAuthentication("Your client id", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Request extra permissions
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new TwitchAuthenticationOptions
+            //{
+            //    ClientId = "Your client id", 
+            //    ClientSecret = "Your client secret"
+            //};
+            //options.Scope.Add("user_subscriptions");
+            //app.UseTwitchAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new TwitchAuthenticationOptions
+            //{
+            //    ClientId = "Your client id", 
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/twitch")
+            //};
+            //app.UseTwitchAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new TwitchAuthenticationOptions
+            //{
+            //    ClientId = "Your client id", 
+            //    ClientSecret = "Your client secret",
+            //    Provider = new TwitchAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's name
+            //            string userDisplayName = context.Name;
+
+            //            // Retrieve the user's email address
+            //            var userEmail = context.Email;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseTwitchAuthentication(options);
+
         }
 
         private void ConfigureTwitter(IAppBuilder app)
