@@ -58,3 +58,27 @@
   background-color: #009dcd;
 box-shadow: inset 0 5px 0 0 #ffffff;
 }
+
+.footer {
+  background-color: #364347;
+  padding: 40px 0px;
+  margin-top: 50px;
+}
+
+.footer h3 {
+  font-family: "SourceSansProExtraLight", Helvetica, Arial, sans-serif;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.footer h4 {
+  font-family: "SourceSansPro", Helvetica, Arial, sans-serif;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
