@@ -7,8 +7,8 @@ links:
     url: https://instagram.com/
   - name: Instagram Developer Home
     url: https://instagram.com/developer/
-  - Registered Clients
-    https://instagram.com/developer/clients/manage/
+  - name: Registered Clients
+    url: https://instagram.com/developer/clients/manage/
 ---
 
 ## 1. Register an application in Instagram
