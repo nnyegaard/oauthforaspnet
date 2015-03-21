@@ -1,10 +1,16 @@
 # OAuth for ASP.NET
 
+## Website
+
+The OAuth for ASP.NET website is available at http://www.oauthforaspnet.com
+
+It is developed using [Jekyll](http://jekyllrb.com) and is in the [gh-pages branch](https://github.com/RockstarLabs/oauthforaspnet/tree/gh-pages) of this repository.
+
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Jerrie Pelser
+Copyright (c) 2014, 2015 Jerrie Pelser
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
