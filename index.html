@@ -35,6 +35,9 @@ layout: frontpage
                 
                 <div class="card-action">
                     <a href="{{ post.url }}" class="provider-name">{{ post.title }}</a>
+                    {% if post.guide %}
+                    <span class="label label-success">Walktrough</span>
+                    {% endif %}
                 </div>
             </div>
         </li>
