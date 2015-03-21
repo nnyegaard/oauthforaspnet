@@ -7,7 +7,7 @@ links:
     url: https://account.live.com/developers/applications
   - name: Scopes and Permissions
     url: https://msdn.microsoft.com/en-us/library/hh243646.aspx
-guide: /microsoft/guides/aspnet-mvc5
+guide: /providers/microsoft/guides/aspnet-mvc5
 ---
 ## 1. Register an app in the Microsot Account Developer Center
 

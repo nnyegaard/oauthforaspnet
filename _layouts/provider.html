@@ -3,29 +3,41 @@ layout: default
 ---
 
 <div class="container">
+<header class="provider-title">
+		<h2>{{ page.title }}</h2>
+	</header>
   <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-8 provider-info">
+	    {% if page.guide %}
+	    	<a class="btn btn-large btn-success btn-embossed" href={{ page.guide }}>
+	    	<span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;&nbsp;Read the step-by-step Walkthrough Guide
+	    	</a>
+	    {% endif %}
+
 		{{ content }}
 	</div>
 	<div class="col-md-3 col-md-offset-1">
-		<div class="panel panel-primary">
-		  <div class="panel-heading">Links</div>
-		  <ul class="list-group">
-		  {% for link in page.links %}
-		  <li class="list-group-item"><a target="_blank" href="{{ link.url }}">{{ link.name }}</a></li>
-			{% endfor %}
-		  </ul>
-		</div>
+		{% if page.links %}
+			<div class="panel panel-inverse">
+			  <div class="panel-heading">Links</div>
+			  <ul class="list-group">
+			  {% for link in page.links %}
+			  <li class="list-group-item"><a target="_blank" href="{{ link.url }}">{{ link.name }}</a></li>
+				{% endfor %}
+			  </ul>
+			</div>
+		{% endif %}
 
-		<div class="panel panel-primary">
-		  <div class="panel-heading">3rd Party SDKs</div>
-		  <ul class="list-group">
-		  {% for sdk in page.sdks %}
-		  <li class="list-group-item"><a target="_blank" href="{{ link.url }}">{{ sdk.name }}</a></li>
-			{% endfor %}
-		  </ul>
-		</div>
-
+		{% if page.sdks %}
+			<div class="panel panel-inverse">
+			  <div class="panel-heading">3rd Party SDKs</div>
+			  <ul class="list-group">
+			  {% for sdk in page.sdks %}
+			  <li class="list-group-item"><a target="_blank" href="{{ link.url }}">{{ sdk.name }}</a></li>
+				{% endfor %}
+			  </ul>
+			</div>
+		{% endif %}
 
 	</div>
   </div>

@@ -12,7 +12,7 @@ sdks:
     url: https://developer.salesforce.com/page/Web_Services_API
   - name: Force.com Toolkit for Azure
     url: https://developer.salesforce.com/page/Getting_Started_with_the_Force.com_Toolkit_for_Azure
-guide: /salesforce/guides/aspnet-mvc5
+guide: /providers/salesforce/guides/aspnet-mvc5
 ---
 
 ## 1. Register an application in Salesforce

@@ -9,7 +9,7 @@ links:
     url: http://api.stackexchange.com/
   - name: Registered OAuth applications
     url: https://stackapps.com/apps/oauth
-guide: /stackexchange/guides/aspnet-mvc5
+guide: /providers/stackexchange/guides/aspnet-mvc5
 ---
 
 ## 1. Register an application in Stack Exchange
