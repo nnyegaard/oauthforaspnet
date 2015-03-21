@@ -2,100 +2,108 @@
 layout: provider
 title:  Stack Exchange
 logo: stackexchange.png
+links:
+  - name: StackExchange Home Page
+    url: http://stackexchange.com/
+  - name: StackExchange API Website
+    url: http://api.stackexchange.com/
+  - name: Registered OAuth applications
+    url: https://stackapps.com/apps/oauth
+guide: /providers/stackexchange/guides/aspnet-mvc5
 ---
-## Introduction
-A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook and Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
 
-ASP.NET MVC 5 has support for social logins built in, but as an app developer you will still need to go trough a few steps to enable this on your application.  This guide will help you through the process of allowing users to log in with their StackExchange account in a step-by-step manner.
+## 1. Register an application in Stack Exchange
 
-To follow this guide you will need to have a StackExchange account.  If you do not have an account then head on over to the [StackExchange Homepage](http://stackexchange.com/) and register before you continue any further.
+Go to the [StackExchange API Website](http://api.stackexchange.com/) and click on the "Register for An App Key" link. Register a new application and be sure to leave the "Enable Client Side OAuth Flow" unchecked. When you are finished take note of the Client Id, Client Secret and Key:
 
-## Registering an application in StackExchange
-In order for your application to use StackExchange as a login mechanism you will need to create an application on the StackExchange API (Stack Apps) website.  To do this head over to the [StackExchange API Website](http://api.stackexchange.com/). 
+![](/images/stackexchange-keys.png)
 
-Click on the "Register for An App Key" link.
+## 2. Install the Nuget Package
 
-![](/images/guides/stackexchange/stackexchange-api-website.png)
+Install the Nuget Package which contains the StackExchange OAuth provider.
 
-If you are not yet signed in to StackExhange network you will be prompted to sign in:
+{% highlight bash %}
+Install-Package Install-Package Owin.Security.Providers
+{% endhighlight %}
 
-![](/images/guides/stackexchange/stackapps-auth.png)
-
-If this is the first time you register on the Stack Apps website, you will be asked to confirm the creation of your account on Stack Apps. Click the "Confirm And Create This Account" button.
-
-![](/images/guides/stackexchange/stackapps-create-account.png)
-
-The next screen will prompt you to supply the details of your application.
-
-![](/images/guides/stackexchange/register-app.png)
-
-Enter the name of your application as well as a description. The OAuth domain needs to be the domain to which the post-authentication OAuth callback is made, so for local development this should be `localhost`. Once you deploy your application it is suggested that you register a separate application on the Stack Apps website with the correct domain for where you application is being deployed.
-
-Finally ensure that the "Enable Client Side OAuth Flow" checkbox is left unticked and click on the "Register Your Application" button.
-
-After the application has been created a screen will be displayed with the details your need when enabling the StackExhange authentication in ASP.NET MVC. Take note of the "Client Id", "Client Secret" and "Key" fields.
-
-![](/images/guides/stackexchange/register-app-success.png)
-
-## Enabling StackExchange authentication in your ASP.NET MVC Application
-The next step is to add the StackExchange login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
-
-![](/images/guides/stackexchange/new_project.png)
-
-Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts".  Click "OK".
-
-![](/images/guides/stackexchange/new_project_mvc.png)
-
-> After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
-
-Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the StackExchange authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
-
-![](/images/guides/stackexchange/nuget_package_dialog.png)
-
-> The **Owin.Security.Providers** Nuget package was developed by myself with contributions from others.  If you want to add extra functionality to any of the providers or add new providers for other services I would appreciate the contributions.  Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
-
-Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
-
-![](/images/guides/stackexchange/navigate_startup_auth.png)
-
-Add a line at the top of the file to include the namespace for the Nuget provider.
+## 3. Register Provider
+ 
+Locate the file in your project called `\App_Start\Startup.Auth.cs`. Ensure that you have imported the `Owin.Security.Providers.StackExchange` namespace:
 
 {% highlight csharp %}
 using Owin.Security.Providers.StackExchange;
 {% endhighlight %}
 
-Enable the StackExchange provider by making a call to the `app.UseStackExchangeAuthentication` method passing in the Client ID of your StackExchange application as the `clientId` parameter, the Client Secret as the `clientSecret` parameter and the Key as the `key` parameter.
+In the `ConfigureAuth` method add the following line of code:
 
 {% highlight csharp %}
-app.UseStackExchangeAuthentication(
-    clientId: "3272",
-    clientSecret: "Zxcsu0KwTsDizsv72AZdZA((",
-    key: "r8LkgkG)rRAuCEit1jWwPw((");
+app.UseStackExchangeAuthentication("Your client id", "Your client secret", "Your key");
 {% endhighlight %}
 
-It is important to ensure that these parameters match the values from StackExchange exactly, otherwise the authentication for your application will fail.
+## 4. Advanced Configuration
 
+### Request extra permissions
 
-![](/images/guides/stackexchange/keys-matchup.png)
+By default the StackExchange provider will not request any scope, which only gives it access to the `/me` endpoint of the API. If you want to request more permissions, you will need to add these to the `Scope` property:
 
-## Testing the application
-You have now created an application in StackExchange and enabled the StackExchange authentication in your application.  The last step is to ensure that everything works.  Run your application by selecting the Debug > Start Debugging menu item or pressing the F5 key in Visual Studio.
+{% highlight csharp %}
+var options = new StackExchangeAuthenticationOptions
+{
+    ClientId = "Your client id",
+    ClientSecret = "Your client secret",
+    Key = "Your key"
+};
+options.Scope.Add("read_inbox");
+app.UseStackExchangeAuthentication(options);
+{% endhighlight %}
 
-The application will open in your web browser.  Select the "Log In" menu at the top.
+The full list of scopes are available under the Scopes heading in the [StackExchange API Authentication documentation](https://api.stackexchange.com/docs/authentication)
 
-![](/images/guides/stackexchange/application_start_screen.png)
+### Specify an alternative callback path
 
-Under the "Use another service to log in" section you will see a button which allows you to log in with StackExchange.  Click the "StackExchange" button.
+By default the StackExchange provider will request StackExchange to redirect to the path `/signin-stackexchange` after the user has signed in and granted permissions. You can specify an alternative redirect URL:
 
-![](/images/guides/stackexchange/application_login_screen.png)
+{% highlight csharp %}
+var options = new StackExchangeAuthenticationOptions
+{
+    ClientId = "Your client id",
+    ClientSecret = "Your client secret",
+    Key = "Your key",
+    CallbackPath = new PathString("/oauth-redirect/stackexchange")
+};
+app.UseStackExchangeAuthentication(options);
+{% endhighlight %}
 
-You will be redirected to the StackExchange website.  If you are not logged in to StackExchange yet you will be prompted to do so.  StackExchange will then prompt you to give the application access to your account.
+### Retrieve access token and other user information returned from StackExchange
 
-![](/images/guides/stackexchange/stackexchange_auth_screen.png)
+You can retrieve the user information returned from StackExchange in the `OnAuthenticated` callback function which gets invoked after the user has authenticated with StackExchange:
 
-Click on the "Approve" button. You will be redirected back to your application and will need to supply your username to complete the registration process.
+{% highlight csharp %}
+var options = new StackExchangeAuthenticationOptions
+{
+    ClientId = "Your client id",
+    ClientSecret = "Your client secret",
+    Key = "Your key",
+    Provider = new StackExchangeAuthenticationProvider
+    {
+        OnAuthenticated = async context =>
+        {
+            // Retrieve the OAuth access token to store for subsequent API calls
+            string accessToken = context.AccessToken;
 
-![](/images/guides/stackexchange/complete_registration.png)
+            // Retrieve the user ID
+            string stackExchangeUserId = context.Id;
 
-Once you have filled in your username and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your StackExchange account in the future.
+            // Retrieve the user name
+            string stackExchangeUserName = context.UserName;
 
+            // Retrieve the user's profile image URL
+            string stackExchangeProfileImage = context.ProfileImage;
+
+            // You can even retrieve the full JSON-serialized user
+            var serializedUser = context.User;
+        }
+    }
+};
+app.UseStackExchangeAuthentication(options);
+{% endhighlight %}

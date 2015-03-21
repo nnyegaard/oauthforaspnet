@@ -2,17 +2,17 @@
 layout: frontpage
 ---
 
-<div class="section" id="index-banner">
+<div class="masthead">
   <div class="container">
     <div class="row">
-      <div class="col s12">
+      <div class="col-sm-12">
         <h1 class="header">OAuth for ASP.NET</h1>
-        <h4>Your one stop guide for configuring OAuth providers for ASP.NET</h4>
+        <h2>Your one stop guide for configuring OAuth providers for ASP.NET</h2>
       </div>
     </div>
     <div class="row">
-      <div class="col s12">
-        <input id="search" type="text" placeholder="Search for the OAuth provider you want to use..." autofocus>
+      <div class="col-sm-8 col-sm-offset-2">
+        <input id="search" type="text" placeholder="Search for an OAuth provider..." autofocus>
       </div>
     </div>
   </div>
@@ -20,22 +20,26 @@ layout: frontpage
 
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col-md-12">
       <ul id="provider-list">
       {% assign sorted_pages = (site.categories.providers | sort: 'title') %}
       {% for post in sorted_pages %}
         <li class="mix">
           <div class="card">
-            <div class="card-content" >
-              <a href="{{ post.url }}">
+                <div class="card-image-container">
+                <a href="{{ post.url }}">
                 <div class="card-image" style="background-image: url('/images/logos/{{ post.logo }}');" >
                 </div>
               </a>
-            </div> 
-            <div class="card-action">
-              <a href="{{ post.url }}" class="provider-name">{{ post.title }}</a>
+                </div>
+                
+                <div class="card-action">
+                    <a href="{{ post.url }}" class="provider-name">{{ post.title }}</a>
+                    {% if post.guide %}
+                    <span class="label label-success">Walktrough</span>
+                    {% endif %}
+                </div>
             </div>
-          </div>
         </li>
       {% endfor %}
       </ul>
