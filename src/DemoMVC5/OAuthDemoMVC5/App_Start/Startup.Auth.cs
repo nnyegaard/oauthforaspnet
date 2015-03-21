@@ -23,6 +23,8 @@ using Owin.Security.Providers.Reddit;
 using Owin.Security.Providers.Reddit.Provider;
 using Owin.Security.Providers.Salesforce;
 using Owin.Security.Providers.StackExchange;
+using Owin.Security.Providers.TripIt;
+using Owin.Security.Providers.TripIt.Provider;
 using Owin.Security.Providers.Yahoo;
 
 namespace OAuthDemoMVC5
@@ -112,6 +114,9 @@ namespace OAuthDemoMVC5
 
             // Configure Stack Exchange
             ConfigureStackExchange(app);
+
+            // Configure TripIt
+            ConfigureTripIt(app);
 
             // Configure Twitter
             ConfigureTwitter(app);
@@ -791,6 +796,56 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseRedditAuthentication(options);
+        }
+
+        private void ConfigureTripIt(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseTripItAuthentication("Your api key", "Your api secret");
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. 
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new TripItAuthenticationOptions
+            //{
+            //    ConsumerKey = "Your API Key", 
+            //    ConsumerSecret = "Your API Secret",
+            //    CallbackPath = new PathString("/oauth-redirect/tripit")
+            //};
+            //app.UseTripItAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new TripItAuthenticationOptions
+            //{
+            //    ConsumerKey = "Your API Key", 
+            //    ConsumerSecret = "Your API Secret",
+            //    Provider = new TripItAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+            //            string accessTokenSecret = context.AccessTokenSecret;
+
+            //            // Retrieve the user ID
+            //            string userDisplayName = context.DisplayName;
+
+            //            // Retrieve the user's full name
+            //            string userEmail = context.Email;
+
+            //            // You can even retrieve the full JSON-serialized user profile 
+            //            var serializedUser = context.Profile;
+            //        }
+            //    }
+            //};
+            //app.UseTripItAuthentication(options);
         }
 
         private void ConfigureSalesforce(IAppBuilder app)
