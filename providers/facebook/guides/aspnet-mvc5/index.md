@@ -41,7 +41,7 @@ You will be prompted to select the platform for which you want to create an appl
 
 Complete the information on the "Create a New App ID" dialog by supplying the name of your application and optionally a namespace, as well as selecting the relevant Category. Click the Create App ID button.
 
-![](/images/guides/facebook/mvc5/add-new-app-menu.png)
+![](/images/guides/facebook/mvc5/create-new-app-id.png)
 
 After the application is created you will need to ensure that your application is enabled for OAuth (which it is by default), and also specify the correct OAuth Redirect URI.
 
