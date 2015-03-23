@@ -27,6 +27,8 @@ using Owin.Security.Providers.TripIt;
 using Owin.Security.Providers.TripIt.Provider;
 using Owin.Security.Providers.Twitch;
 using Owin.Security.Providers.Yahoo;
+using Owin.Security.Providers.Yammer;
+using Owin.Security.Providers.Yammer.Provider;
 
 namespace OAuthDemoMVC5
 {
@@ -127,6 +129,9 @@ namespace OAuthDemoMVC5
 
             // Configure Yahoo
             ConfigureYahoo(app);
+
+            // Configure Yammer
+            ConfigureYammer(app);
         }
 
         private void ConfigureArcGIS(IAppBuilder app)
@@ -1154,6 +1159,59 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseYahooAuthentication(options);
+        }
+
+        private void ConfigureYammer(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+           * Normal configuration
+           * ------------------------------------------------------------------------------- */
+
+            //app.UseYammerAuthentication("Your client id", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path.
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new YammerAuthenticationOptions
+            //{
+            //    ClientId = "Your client id", 
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/yammer")
+            //};
+            //app.UseYammerAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new YammerAuthenticationOptions
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new YammerAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's
+            //            string fullName = context.Name;
+
+            //            // Retrieve the user's network
+            //            string networkName = context.Network;
+
+            //            // Retrieve the user's email
+            //            string emailAddress = context.PrimaryEmail;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseYammerAuthentication(options);
+
         }
     }
 }
