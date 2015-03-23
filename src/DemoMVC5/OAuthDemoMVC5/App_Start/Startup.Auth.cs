@@ -26,6 +26,7 @@ using Owin.Security.Providers.StackExchange;
 using Owin.Security.Providers.TripIt;
 using Owin.Security.Providers.TripIt.Provider;
 using Owin.Security.Providers.Twitch;
+using Owin.Security.Providers.WordPress;
 using Owin.Security.Providers.Yahoo;
 using Owin.Security.Providers.Yammer;
 using Owin.Security.Providers.Yammer.Provider;
@@ -126,6 +127,9 @@ namespace OAuthDemoMVC5
 
             // Configure Twitch
             ConfigureTwitch(app);
+
+            // Configure WordPress
+            ConfigureWordPress(app);
 
             // Configure Yahoo
             ConfigureYahoo(app);
@@ -1111,6 +1115,60 @@ namespace OAuthDemoMVC5
             //    }
             //};
             //app.UseTwitterAuthentication(options);
+
+        }
+
+        private void ConfigureWordPress(IAppBuilder app)
+        {
+            /* -------------------------------------------------------------------------------
+             * Normal configuration
+             * ------------------------------------------------------------------------------- */
+
+            //app.UseWordPressAuthentication("Your client id", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new WordPressAuthenticationOptions
+            //{
+            //    ClientId = "Your client id", 
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = new PathString("/oauth-redirect/wordpress")
+            //};
+            //app.UseWordPressAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new WordPressAuthenticationOptions
+            //{
+            //    ClientId = "Your client id", 
+            //    ClientSecret = "Your client secret",
+            //    Provider = new WordPressAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's name
+            //            string userName = context.Name;
+
+            //            // Retrieve the user's email address
+
+            //            // Retrieve the blog details
+            //            var blogId = context.BlogId;
+            //            var blogName = context.BlogName;
+            //            var blogUrl = context.BlogUrl;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseWordPressAuthentication(options);
 
         }
 
