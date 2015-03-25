@@ -5,8 +5,6 @@ title:  "Walkthrough: Configuring an OpenID Sign-In for ASP.NET MVC 5 and Visual
 
 ## Introduction
 
-A lot of applications these days allow users to sign in using their existing login credentials from a social networking service such as Facebook or Twitter.  This simplifies the login process as users do not have to remember multiple login credentials for various websites, and it also provides the application developer in turn access to certain demographical information from the user.
-
 ASP.NET MVC 5 does not support signing in with OpenID as part of the standard external authentication services, but support for OpenID authentication is available through an open source NuGet package. This guide will help you through the process of enabling OpenID signin in your application in a step-by-step manner.
 
 [OpenID](http://openid.net/) is an authentication protocol implemented by many organizations. In this guide we will use Orange as the OpenID authentication provider, so you will need to have a Orange account. If you do not have an account (accounts are reserved for clients) then you can use any other OpenID authentication provider.
@@ -28,8 +26,6 @@ Next, select the MVC project template and ensure that the **authentication** met
 Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the OpenID authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
 ![](/images/guides/openid/mvc5/manage-nuget-packages.png)
-
-> The **Owin.Security.Providers** Nuget package was developed by Jerrie Pelser with contributions from others, myself included. All contributions are appreciated, if you want to add extra functionality to any of the providers or add new providers for other services. Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
 
 Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
