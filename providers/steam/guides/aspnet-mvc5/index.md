@@ -20,11 +20,11 @@ In order for you to use Steam as an external authentication provider in your web
 
 Complete the domain field for your application, check the "I agree to the Steam Web API Terms of Use" (and don't forget to read it) and click the "Register" button.
 
-![](/images/guides/steam/mvc5/Steam_Web_API_Key_Register.png)
+![](/images/guides/steam/mvc5/steam-web-api-key-register.png)
 
 After the application registration is complete your will be redirected to the Web API Key page. Take note of the "Key" as it will be needed when enabling the Steam authentication in your ASP.NET MVC application.
 
-![](/images/guides/steam/mvc5/Steam_Web_API_Key.png)
+![](/images/guides/steam/mvc5/steam-web-api-key.png)
 
 > You can only register one key, so be careful with it.
 
@@ -32,23 +32,23 @@ After the application registration is complete your will be redirected to the We
 
 The next step is to add the Steam login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new ";ASP.NET Web Application" and click "OK".
 
-![](/images/guides/steam/mvc5/New_Project.png)
+![](/images/guides/steam/mvc5/new-project.png)
 
 Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts". Click "OK".
 
-![](/images/guides/steam/mvc5/New_ASP.NET_Project_WebApplication1.png)
+![](/images/guides/steam/mvc5/new-aspnet-project-webapplication1.png)
 
 > After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
 
 Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the Steam authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
-![](/images/guides/steam/mvc5/Manage_NuGet_Packages.png)
+![](/images/guides/steam/mvc5/manage-nuget-packages.png)
 
 > The **Owin.Security.Providers** Nuget package was developed by Jerrie Pelser with contributions from others, myself included. All contributions are appreciated, if you want to add extra functionality to any of the providers or add new providers for other services. Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
 
 Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
-![](/images/guides/steam/mvc5/SolutionExplorer.png)
+![](/images/guides/steam/mvc5/solution-explorer.png)
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
@@ -70,18 +70,18 @@ You have now registered a Web API Key in Steam and enabled the Steam authenticat
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
 
-![](/images/guides/steam/mvc5/GoToLoginPage.png)
+![](/images/guides/steam/mvc5/go-to-login-page.png)
 
 Under the "Use another service to log in" section you will see a button which allows you to log in with Steam.  Click the "Steam" button.
 
-![](/images/guides/steam/mvc5/LoginWithSteam.png)
+![](/images/guides/steam/mvc5/login-with-steam.png)
 
 You will be redirected to the Steam website.  If you are not logged in to Steam yet you will be prompted to do so.
 Click on the "Yes, Sign In" button.  
-![](/images/guides/steam/mvc5/Steam_Sign_In.png)
+![](/images/guides/steam/mvc5/steam-sign-in.png)
 
 You will be redirected back to your application and will need to supply your email address to complete the registration process.
 
-![](/images/guides/steam/mvc5/Complete_Registration.png)
+![](/images/guides/steam/mvc5/complete-registration.png)
 
 Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your Steam account in the future.

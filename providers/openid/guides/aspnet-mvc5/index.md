@@ -17,23 +17,23 @@ ASP.NET MVC 5 does not support signing in with OpenID as part of the standard ex
 
 The next step is to add the OpenID login to your ASP.NET MVC application.  For this we will create a new ASP.NET MVC application using Visual Studio. Go to File > New > Project and select the template for a new "ASP.NET Web Application" and click "OK".
 
-![](/images/guides/openid/mvc5/New_Project.png)
+![](/images/guides/openid/mvc5/new-project.png)
 
 Next, select the MVC project template and ensure that the **authentication** method is set to "Individual User Accounts".  Click "OK".
 
-![](/images/guides/openid/mvc5/New_ASP.NET_Project_WebApplication1.png)
+![](/images/guides/openid/mvc5/new-aspnet-project-webapplication1.png)
 
 > After the project wizard has completed I would advise you to update your NuGet packages before you proceed.  To do this you can right click on the solution file and select "Manage NuGet Packages for Solution...".  In the "Manage Nuget Packages" dialog you can navigate to the Updates node and ensure that you install any updates.
 
 Next we need to install the **Owin.Security.Providers** Nuget package which will give us access to the OpenID authentication provider.  Right click on your web project and select "Manage Nuget Packages...". Select the "Online" node in the "Manage Nuget Packages" dialog and search for the package named "Owin.Security.Providers".  Click "Install" to install the package into your project.
 
-![](/images/guides/openid/mvc5/Manage_NuGet_Packages.png)
+![](/images/guides/openid/mvc5/manage-nuget-packages.png)
 
 > The **Owin.Security.Providers** Nuget package was developed by Jerrie Pelser with contributions from others, myself included. All contributions are appreciated, if you want to add extra functionality to any of the providers or add new providers for other services. Please fork the repository located at [https://github.com/owin-middleware/OwinOAuthProviders](https://github.com/owin-middleware/OwinOAuthProviders) and send a pull request.
 
 Navigate to the `Startup.Auth` file located in the `App_Start` folder of your application and open the file.
 
-![](/images/guides/openid/mvc5/SolutionExplorer.png)
+![](/images/guides/openid/mvc5/solution-explorer.png)
 
 Add a line at the top of the file to include the namespace for the Nuget provider.
 
@@ -60,19 +60,19 @@ You have now enabled the Orange OpenID authentication in your application.  The 
 
 The application will open in your web browser.  Select the "Log In" menu at the top.
 
-![](/images/guides/github/mvc5/GoToLoginPage.png)
+![](/images/guides/openid/mvc5/go-to-login-page.png)
 
 Under the "Use another service to log in" section you will see a button which allows you to log in with Orange.  Click the "Orange" button.
 
-![](/images/guides/openid/mvc5/LoginWithOrangeOpenID.png)
+![](/images/guides/openid/mvc5/login-with-orange-openid.png)
 
 You will be redirected to the Orange website.  If you are not logged in to Orange yet you will be prompted to do so.
 You can see which account is used to authenticate as well as the data send to your application.
 Click on the "Validate" button.  
-![](/images/guides/openid/mvc5/OrangeOpenID_Sign_In.png)
+![](/images/guides/openid/mvc5/orange-openid-sign-in.png)
 
 You will be redirected back to your application and will need to supply your email address to complete the registration process.
 
-![](/images/guides/openid/mvc5/Complete_Registration.png)
+![](/images/guides/openid/mvc5/complete-registration.png)
 
 Once you have filled in your email address and clicked the "Register" button you will be logged into the application.  You can now log in to the application using your Orange account in the future.
