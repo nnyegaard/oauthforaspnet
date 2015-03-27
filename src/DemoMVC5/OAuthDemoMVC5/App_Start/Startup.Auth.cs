@@ -16,6 +16,8 @@ using Owin.Security.Providers.Asana;
 using Owin.Security.Providers.BattleNet;
 using Owin.Security.Providers.Buffer;
 using Owin.Security.Providers.Dropbox;
+using Owin.Security.Providers.Foursquare;
+using Owin.Security.Providers.Foursquare.Provider;
 using Owin.Security.Providers.Instagram;
 using Owin.Security.Providers.Instagram.Provider;
 using Owin.Security.Providers.OpenID;
@@ -426,7 +428,49 @@ namespace OAuthDemoMVC5
              * Normal configuration
              * ------------------------------------------------------------------------------- */
 
-            //app.UseFoursquareAuthentication("Your App ID", "Your App Secret");
+            //app.UseFoursquareAuthentication("Your client id", "Your client secret");
+
+            /* -------------------------------------------------------------------------------
+             * Specify an alternate callback path. In this case you need to make sure that
+             * the redirect URI you specify when registering the application in Foursquare
+             * matches this exactly
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new FoursquareAuthenticationOptions()
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    CallbackPath = "/oauth-redirect/foursquare"
+            //};
+            //app.UseFoursquareAuthentication(options);
+
+            /* -------------------------------------------------------------------------------
+             * Retrieve the access token and other user information
+             * ------------------------------------------------------------------------------- */
+
+            //var options = new FoursquareAuthenticationOptions()
+            //{
+            //    ClientId = "Your client id",
+            //    ClientSecret = "Your client secret",
+            //    Provider = new FoursquareAuthenticationProvider
+            //    {
+            //        OnAuthenticated = async context =>
+            //        {
+            //            // Retrieve the OAuth access token to store for subsequent API calls
+            //            string accessToken = context.AccessToken;
+
+            //            // Retrieve the user's name
+            //            string name = context.Name;
+
+            //            // Retrieve the user's email address
+            //            string emailAddress = context.Email;
+
+            //            // You can even retrieve the full JSON-serialized user
+            //            var serializedUser = context.User;
+            //        }
+            //    }
+            //};
+            //app.UseFoursquareAuthentication(options);
 
         }
 
